@@ -7,8 +7,8 @@ Create an unique wallet address to accept payments for an ERC-20 token from a bu
 
 ### Example
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './model/models';
+import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
+import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
 // Instantiate clients
 const bleumiPay = new Erc20PaymentsApi();
@@ -54,8 +54,8 @@ Return a specific wallet
 
 ### Example
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './model/models';
+import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
+import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
 // Instantiate clients
 const bleumiPay = new Erc20PaymentsApi();
@@ -93,8 +93,8 @@ When the value of 'nextToken' field is an empty string, there are no more wallet
 
 ### Example
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './model/models';
+import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
+import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
 // Instantiate clients
 const bleumiPay = new Erc20PaymentsApi();
@@ -141,8 +141,8 @@ If the settle amount is more than the current wallet balance, no action is perfo
 
 ### Example
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './model/models';
+import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
+import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
 // Instantiate clients
 const bleumiPay = new Erc20PaymentsApi();
@@ -188,8 +188,8 @@ At the end of refund operation, the wallet balance will be zero.
 
 ### Example
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './model/models';
+import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
+import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
 // Instantiate clients
 const bleumiPay = new Erc20PaymentsApi();
@@ -232,8 +232,8 @@ Return a specific operation of the wallet
 
 ### Example
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './model/models';
+import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
+import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
 // Instantiate clients
 const bleumiPay = new Erc20PaymentsApi();
@@ -274,8 +274,8 @@ When the value of 'nextToken' field is an empty string, there are no more wallet
 
 ### Example
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './model/models';
+import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
+import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
 // Instantiate clients
 const bleumiPay = new Erc20PaymentsApi();
