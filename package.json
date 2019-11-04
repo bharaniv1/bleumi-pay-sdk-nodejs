@@ -1,0 +1,30 @@
+{
+    "name": "bleumi-pay-sdk-nodejs",
+    "version": "1.0.0",
+    "description": "NodeJS Client for Bleumi Pay",
+    "repository": "bleumi/bleumi-pay-sdk-nodejs",
+    "main": "dist/api.js",
+    "types": "dist/api.d.ts",
+    "scripts": {
+        "clean": "rm -Rf node_modules/ *.js",
+        "build": "tsc",
+        "test": "npm run build && node dist/client.js"
+    },
+    "author": "Bleumi",
+    "license": "MIT",
+    "keywords": ["payment-gateway", "cryptopayments", "erc-20", "ethereum", "Bleumi Pay API"],
+    "dependencies": {
+        "bluebird": "^3.5.0",
+        "request": "^2.81.0",
+        "@types/bluebird": "*",
+        "@types/request": "*",
+        "rewire": "^3.0.2"
+    },
+    "devDependencies": {
+        "typescript": "^2.4.2",
+        "@types/node": "8.10.34"
+    },
+    "publishConfig": {
+        "registry": "https://github.com/bleumi/"
+    }
+}
