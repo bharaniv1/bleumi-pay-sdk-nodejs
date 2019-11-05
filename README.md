@@ -46,7 +46,7 @@ The following code creates a wallet to accept payment from the buyer specific fo
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
 import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
-// Instantiate clients
+// Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
 async function createWallet(id: string) {
@@ -94,11 +94,15 @@ Erc20PaymentsApi | [**getWalletOperations**](docs/Api/Erc20PaymentsApi.md#getwal
  - [PaginatedWalletOperations](docs/Model/PaginatedWalletOperations.md)
  - [PaginatedWallets](docs/Model/PaginatedWallets.md)
  - [Wallet](docs/Model/Wallet.md)
+ - [WalletBalance](docs/Model/WalletBalance.md)
  - [WalletCreateInput](docs/Model/WalletCreateInput.md)
  - [WalletCreateOutput](docs/Model/WalletCreateOutput.md)
+ - [WalletInputs](docs/Model/WalletInputs.md)
  - [WalletOperation](docs/Model/WalletOperation.md)
- - [WalletOperationInput](docs/Model/WalletOperationInput.md)
+ - [WalletOperationInputs](docs/Model/WalletOperationInputs.md)
  - [WalletOperationOutput](docs/Model/WalletOperationOutput.md)
+ - [WalletRefundOperationInput](docs/Model/WalletRefundOperationInput.md)
+ - [WalletSettleOperationInput](docs/Model/WalletSettleOperationInput.md)
 
 ## Limitations
 

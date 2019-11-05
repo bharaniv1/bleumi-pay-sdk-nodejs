@@ -10,14 +10,14 @@ Create an unique wallet address to accept payments for an ERC-20 token from a bu
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
 import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
-// Instantiate clients
+// Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
 async function createWallet(id: string) {
     try {
-        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
-        const buyer = new EthAddress('<BUYER_ADDR>');
-        const merchant = new EthAddress('<MERCHANT_ADDR>');
+        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
+        const buyer = new EthAddress('<BUYER_ADDR>'); // Replace <BUYER_ADDR> with the Buyer's Enthereum Network Address
+        const merchant = new EthAddress('<MERCHANT_ADDR>'); // Replace <MERCHANT_ADDR> with the Merchant's Enthereum Network Address
 
         const walletCreateInput = new WalletCreateInput();
         walletCreateInput.id = id;
@@ -40,7 +40,7 @@ async function createWallet(id: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**WalletCreateInput**](../Model/WalletCreateInput.md)| Request body - used to specify the parameters for the wallet creations.  |
+ **walletCreateInput** | [**WalletCreateInput**](../Model/WalletCreateInput.md)| Request body - used to specify the parameters for the wallet creations.  |
  **chain** | [**EthNetwork**](../Model/EthNetwork.md)| Ethereum network in which wallet is to be created. Please refer to the [network list](https://pay.bleumi.com/docs/#supported-ethereum-networks) |
 
 ### Return type
@@ -55,14 +55,13 @@ Return a specific wallet
 ### Example
 ```javascript
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
 // Instantiate clients
 const bleumiPay = new Erc20PaymentsApi();
 
 async function getWallet(id: string) {
     try {
-        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
+        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
         const response = await bleumiPay.getWallet(id);
         const wallet = response.body;
         console.log(JSON.stringify(wallet));
@@ -94,18 +93,17 @@ When the value of 'nextToken' field is an empty string, there are no more wallet
 ### Example
 ```javascript
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
-// Instantiate clients
+// Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
 async function listWallets() {
     try {
-        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
-        const nextToken = '';
-        const sortBy =  'createdAt' ;
-        const startAt = '';
-        const endAt = '';
+        const nextToken = ""; // string | Cursor to start results from
+        const sortBy = "<SORT_BY>"; // string | Sort wallets by | Eg. "createdAt"
+        const startAt = "<START_TIMESTAMP>"; // string | Get wallets from this timestamp | Eg. 1546300800 for 1-JAN-2019
+        const endAt = ""; // string | Get wallets till this timestamp
+        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>') //Replace <YOUR_API_KEY> with your actual API key
         const response = await bleumiPay.listWallets(nextToken, sortBy, startAt, endAt);
         const paginatedWallets = response.body;
         console.log(JSON.stringify(paginatedWallets));
@@ -120,10 +118,10 @@ async function listWallets() {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **next_token** | **string**| Cursor to start results from | [optional]
- **sort_by** | **string**| Sort wallets by | [optional] <b>'createdAt'</b> - results will be sorted by created time in ascending order. <br/><b>'updatedAt'</b> - results will be sorted by last updated time in ascending order.
- **start_at** | **string**| Get wallets from this timestamp | [optional] Get payments from this timestamp (UNIX). Will be compared to created or updated time based on the value of sortBy parameter.
- **end_at** | **string**| Get wallets till this timestamp | [optional] Get payments till this timestamp (UNIX). Will be compared to created or updated time based on the value of sortBy parameter.
+ **nextToken** | **string**| The token to fetch the next page, supply blank value to get the first page of wallet operations | [optional]
+ **sortBy** | **string**| Sort wallets by | [optional] <b>'createdAt'</b> - results will be sorted by created time in ascending order. <br/><b>'updatedAt'</b> - results will be sorted by last updated time in ascending order.
+ **startAt** | **string**| Get wallets from this timestamp | [optional] Get payments from this timestamp (UNIX). Will be compared to created or updated time based on the value of sortBy parameter.
+ **endAt** | **string**| Get wallets till this timestamp | [optional] Get payments till this timestamp (UNIX). Will be compared to created or updated time based on the value of sortBy parameter.
 
 ### Return type
 
@@ -142,19 +140,19 @@ If the settle amount is more than the current wallet balance, no action is perfo
 ### Example
 ```javascript
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
+import { WalletSettleOperationInput, EthAddress } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
-// Instantiate clients
+// Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
 async function settleWallet(id: string) {
     try {
-        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
+        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); // string | Replace <YOUR_API_KEY> with your actual API key
 
-        const token = new EthAddress('<ERC20_TOKEN_ADDR>');
+        const token = new EthAddress('<TOKEN_ADDR>'); // string | Replace <TOKEN_ADDR> with ECR-20 token address
 
         const settleOperationInput = new WalletSettleOperationInput();
-        settleOperationInput.amount = '10';
+        settleOperationInput.amount = '<AMT>'; // string | Replace <AMT> with settle amount
         settleOperationInput.token = token;
 
         const response = await bleumiPay.settleWallet(id, settleOperationInput);
@@ -172,7 +170,7 @@ async function settleWallet(id: string) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **string**| The ID of the wallet to settle (withdraw) the funds from |
- **body** | [**WalletSettleOperationInput**](../Model/WalletSettleOperationInput.md)| Request body - used to specify the token and amount to settle. |
+ **walletSettleOperationInput** | [**WalletSettleOperationInput**](../Model/WalletSettleOperationInput.md)| Request body - used to specify the token and amount to settle. |
 
 
 ### Return type
@@ -189,16 +187,16 @@ At the end of refund operation, the wallet balance will be zero.
 ### Example
 ```javascript
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
+import { WalletRefundOperationInput,  EthAddress } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
-// Instantiate clients
+// Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
 async function refundWallet(id: string) {
     try {
-        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
+        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
 
-        const token = new EthAddress('<ERC20_TOKEN_ADDR>');
+        const token = new EthAddress('<TOKEN_ADDR>'); // string | The ECR-20 token to refund | Replace <TOKEN_ADDR> with the Token Contract Address
         const refundOperationInput = new WalletRefundOperationInput();
         refundOperationInput.token = token;
 
@@ -217,7 +215,7 @@ async function refundWallet(id: string) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **string**| The ID of the wallet to refund the funds to the Buyer |
- **body** | [**WalletRefundOperationInput**](../Model/WalletRefundOperationInput.md)| Request body - used to specify the token to refund. |
+ **walletRefundOperationInput** | [**WalletRefundOperationInput**](../Model/WalletRefundOperationInput.md)| Request body - used to specify the token to refund. |
 
 
 ### Return type
@@ -233,14 +231,13 @@ Return a specific operation of the wallet
 ### Example
 ```javascript
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
-// Instantiate clients
+// Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
 async function getOperation(id: string, txId: string) {
     try {
-        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
+        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
         const response = await bleumiPay.getWalletOperation(id, txId);
         const walletOperation = response.body;
         console.log(JSON.stringify(walletOperation));
@@ -275,15 +272,14 @@ When the value of 'nextToken' field is an empty string, there are no more wallet
 ### Example
 ```javascript
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
 
-// Instantiate clients
+// Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
-async function listWalletOperations(id: string) {
+async function listWalletOperations(id: string, nextToken: string) {
     try {
-        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
-        const response = await bleumiPay.getWalletOperations(id);
+        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
+        const response = await bleumiPay.getWalletOperations(id, nextToken);
         const paginatedWalletOperations = response.body;
         console.log(JSON.stringify(paginatedWalletOperations));
     } catch (err) {
@@ -298,7 +294,7 @@ async function listWalletOperations(id: string) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **string**| Unique ID of the wallet for which you need the list of operations that was performed by the merchant (or) the payment processor |
- **next_token** | **string**| The token to fetch the next page, supply blank value to get the first page of wallet operations | [optional]
+ **nextToken** | **string**| The token to fetch the next page, supply blank value to get the first page of wallet operations | [optional]
 
 ### Return type
 
