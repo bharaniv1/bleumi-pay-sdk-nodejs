@@ -1,8 +1,11 @@
 {
-    "name": "bleumi-pay-sdk-nodejs",
+    "name": "@bleumi/pay-sdk",
     "version": "1.0.0",
-    "description": "NodeJS Client for Bleumi Pay",
-    "repository": "bleumi/bleumi-pay-sdk-nodejs",
+    "description": "NodeJS SDK for Bleumi Pay API",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bleumi/bleumi-pay-sdk-nodejs.git"
+    },
     "main": "dist/api.js",
     "types": "dist/api.d.ts",
     "scripts": {
@@ -23,8 +26,5 @@
     "devDependencies": {
         "typescript": "^2.4.2",
         "@types/node": "8.10.34"
-    },
-    "publishConfig": {
-        "registry": "https://github.com/bleumi/"
     }
 }

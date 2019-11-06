@@ -30,12 +30,12 @@ Bleumi Pay SDK uses API keys to authenticate requests. You can obtain an API key
 
 ### Install Package
 
-[![npm (scoped)](https://img.shields.io/npm/v/bleumi-pay-sdk-nodejs.svg)](https://www.npmjs.com/package/bleumi-pay-sdk-nodejs )
+[![npm (scoped)](https://img.shields.io/npm/v/@bleumi/pay-sdk.svg)](https://www.npmjs.com/package/@bleumi/pay-sdk)
 
 ### In Node.js
 
 ```
-npm install bleumi-pay-sdk-nodejs -g
+npm install @bleumi/pay-sdk -g
 ```
 
 ### Run Sample Code
