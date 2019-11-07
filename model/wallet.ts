@@ -19,7 +19,7 @@ export class Wallet {
     */
     'id': string;
     /**
-    * Ethereum network in which wallet is to be created. Please refer to the [network list](https://pay.bleumi.com/docs/#supported-ethereum-networks)
+    * Ethereum network in which wallet is to be created. Please refer to the [Supported Ethereum Networks](https://pay.bleumi.com/docs/#supported-ethereum-networks)
     */
     'chain': string;
     /**

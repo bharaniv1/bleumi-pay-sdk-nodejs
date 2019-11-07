@@ -43,8 +43,7 @@ npm install @bleumi/pay-sdk -g
 The following code creates a wallet to accept payment from the buyer specific for the ECR-20 Token.
 
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys } from './node_modules/bleumi-pay-sdk-nodejs/dist/api/erc20PaymentsApi';
-import { WalletCreateInput, WalletRefundOperationInput, WalletSettleOperationInput, EthAddress, EthNetwork } from './node_modules/bleumi-pay-sdk-nodejs/dist/model/models';
+import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys, WalletCreateInput, EthAddress, EthNetwork } from '@bleumi/pay-sdk';
 
 // Instantiate client
 const bleumiPay = new Erc20PaymentsApi();

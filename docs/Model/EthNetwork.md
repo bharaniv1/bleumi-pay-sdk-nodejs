@@ -7,4 +7,3 @@
 * `GOERLI` (value: `"goerli"`)
 * `KOVAN` (value: `"kovan"`)
 * `RINKEBY` (value: `"rinkeby"`)
-
