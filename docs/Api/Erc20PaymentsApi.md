@@ -1,6 +1,7 @@
 # Erc20PaymentsApi
 
 # **createWallet**
+
 > WalletCreateOutput createWallet($body, $chain)
 
 Create an unique wallet address to accept payments for an ERC-20 token from a buyer
@@ -169,7 +170,7 @@ async function settleWallet(id: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| Unique identifier of the wallet (specified during [Generate Wallet](https://pay.bleumi.com/docs/#generate-wallet-address)) to settle
+ **id** | **string**| Unique identifier of the wallet (specified during [Create Wallet](#createwallet)) to settle
  **walletSettleOperationInput** | [**WalletSettleOperationInput**](../Model/WalletSettleOperationInput.md)| Specify the token and amount to settle. |
 
 
@@ -214,7 +215,7 @@ async function refundWallet(id: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| Unique identifier of the wallet (specified during [Generate Wallet](https://pay.bleumi.com/docs//#generate-wallet-address)) to refund |
+ **id** | **string**| Unique identifier of the wallet (specified during [Create Wallet](#createwallet)) to refund |
  **walletRefundOperationInput** | [**WalletRefundOperationInput**](../Model/WalletRefundOperationInput.md)| Specify the token to refund. |
 
 
@@ -252,8 +253,8 @@ async function getOperation(id: string, txId: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| Unique identifier of the wallet (specified during [Generate Wallet](https://pay.bleumi.com/docs/#generate-wallet-address)) |
- **txid** | **string**| Transaction ID of the operation (returned during [Refund Wallet](https://pay.bleumi.com/docs/#refund-wallet) / [Settle Wallet](https://pay.bleumi.com/docs/#settle-wallet)) to retrieve |
+ **id** | **string**| Unique identifier of the wallet (specified during [Create Wallet](#createwallet)) |
+ **txid** | **string**| Transaction ID of the operation (returned during [Refund Wallet](#refundwallet) / [Settle Wallet](#settlewallet)) to retrieve |
 
 ### Return type
 
@@ -291,7 +292,7 @@ async function listWalletOperations(id: string, nextToken: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| Unique identifier of the wallet (specified during [Generate Wallet](https://pay.bleumi.com/docs/#generate-wallet-address)) |
+ **id** | **string**| Unique identifier of the wallet (specified during [Create Wallet](#createwallet)) |
  **nextToken** | **string**| The token to fetch the next page, supply blank value to get the first page of wallet operations | [optional]
 
 ### Return type
