@@ -2,7 +2,7 @@
 
 # **createWallet**
 
-> WalletCreateOutput createWallet($body, $chain)
+> WalletCreateOutput createWallet(walletCreateInput, chain)
 
 Create an unique wallet address to accept payments for an ERC-20 token from a buyer
 
@@ -42,14 +42,14 @@ async function createWallet(id: string) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **walletCreateInput** | [**WalletCreateInput**](../Model/WalletCreateInput.md)| Specify the parameters for the wallet creations.  |
- **chain** | [**EthNetwork**](../Model/EthNetwork.md)| Ethereum network in which the wallet is to be created. Please refer to the [Supported Ethereum Networks] (https://pay.bleumi.com/docs/#supported-ethereum-networks) |
+ **chain** | [**EthNetwork**](../Model/EthNetwork.md)| Ethereum network in which the wallet is to be created. Please refer to the [Supported Ethereum Networks](https://pay.bleumi.com/docs/#supported-ethereum-networks) |
 
 ### Return type
 
 [**WalletCreateOutput**](../Model/WalletCreateOutput.md)
 
 # **getWallet**
-> Wallet getWallet($id)
+> Wallet getWallet(id)
 
 Return a specific wallet
 
@@ -84,7 +84,7 @@ Name | Type | Description  | Notes
 [**Wallet**](../Model/Wallet.md)
 
 # **listWallets**
-> PaginatedWallets listWallets($next_token, $sort_by, $start_at, $end_at)
+> PaginatedWallets listWallets(nextToken, sortBy, startAt, endAt)
 
 This method retrieves a list of wallets.
 The list of wallets is returned as an array in the 'results' field. The list is restricted to a maximum of 100 wallets.
@@ -129,7 +129,7 @@ Name | Type | Description  | Notes
 [**PaginatedWallets**](../Model/PaginatedWallets.md)
 
 # **settleWallet**
-> WalletOperationOutput settleWallet($body, $id)
+> WalletOperationOutput settleWallet(id, settleOperationInput)
 
 Settle a wallet, settle amount will be transferred to the payment processor or the merchant as specified at the time of creation of the wallet. Supply the unique id that was used when the wallet was created.
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 [**WalletOperationOutput**](../Model/WalletOperationOutput.md)
 
 # **refundWallet**
-> WalletOperationOutput refundWallet($body, $id)
+> WalletOperationOutput refundWallet(id, refundOperationInput)
 
 Refund wallet. The entire wallet amount will be transferred to the buyer. Supply the unique id that was used when the wallet was created.
 
@@ -261,7 +261,7 @@ Name | Type | Description  | Notes
 [**WalletOperation**](../Model/WalletOperation.md)
 
 # **getWalletOperations**
-> PaginatedWalletOperations getWalletOperations($id, $next_token)
+> PaginatedWalletOperations getWalletOperations(id, nextToken)
 
 This method retrieves the list of wallet operations performed by the mechant on a specific wallet.
 The list of wallet operations is returned as an array in the 'results' field. The list is restricted to a maximum of 100 wallet operations.
@@ -298,14 +298,3 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PaginatedWalletOperations**](../Model/PaginatedWalletOperations.md)
-
-### Response Sample
-
-> The above code will result in JSON structured like this:
-
-```json
-{
-  "chain": "ropsten",
-  "addr": "0xbefda6e35785ff904732fb71e10acaaab29c39e4"
-}
-```
