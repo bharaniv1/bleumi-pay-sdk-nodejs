@@ -1,10 +1,10 @@
 # Erc20PaymentsApi
 
-# **createWallet**
+# **generateWallet**
 
-> WalletCreateOutput createWallet(walletCreateInput, chain)
+> WalletCreateOutput generateWallet(walletCreateInput, chain)
 
-Create an unique wallet address to accept payments for an ERC-20 token from a buyer
+Generate an unique wallet address to accept payments for an ERC-20 token from a buyer.
 
 ### Example
 ```javascript
@@ -14,7 +14,7 @@ import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys, WalletCreateInput, WalletRef
 // Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
-async function createWallet(id: string) {
+async function generateWallet(id: string) {
     try {
         bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
         const buyer = new EthAddress('<BUYER_ADDR>'); // Replace <BUYER_ADDR> with the Buyer's Enthereum Network Address
@@ -26,7 +26,7 @@ async function createWallet(id: string) {
         walletCreateInput.transferAddress = merchant;
 
         const chain = EthNetwork.Ropsten;
-        const response = await bleumiPay.createWallet(walletCreateInput, chain);
+        const response = await bleumiPay.generateWallet(walletCreateInput, chain);
         const walletCreateOutput = response.body;
         console.log(JSON.stringify(walletCreateOutput));
     } catch (err) {
@@ -41,7 +41,7 @@ async function createWallet(id: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **walletCreateInput** | [**WalletCreateInput**](../Model/WalletCreateInput.md)| Specify the parameters for the wallet creations.  |
+ **walletCreateInput** | [**WalletCreateInput**](../Model/WalletCreateInput.md)| Specify the parameters for the wallet generation.  |
  **chain** | [**EthNetwork**](../Model/EthNetwork.md)| Ethereum network in which the wallet is to be created. Please refer to the [Supported Ethereum Networks](https://pay.bleumi.com/docs/#supported-ethereum-networks) |
 
 ### Return type
@@ -51,7 +51,7 @@ Name | Type | Description  | Notes
 # **getWallet**
 > Wallet getWallet(id)
 
-Return a specific wallet
+This method retrieves a wallet.
 
 ### Example
 ```javascript
@@ -84,11 +84,17 @@ Name | Type | Description  | Notes
 [**Wallet**](../Model/Wallet.md)
 
 # **listWallets**
+
 > PaginatedWallets listWallets(nextToken, sortBy, startAt, endAt)
 
 This method retrieves a list of wallets.
-The list of wallets is returned as an array in the 'results' field. The list is restricted to a maximum of 100 wallets.
-If there are more wallets a cursor is passed in the 'nextToken' field. Passing this as the 'nextToken' query parameter will fetch the next page.
+
+### Pagination
+
+The list of wallets is returned as an array in the 'results' field. The list is restricted to a maximum of 100 wallets per page.
+
+If there are more than 100 wallets generated for an ethereum network, a cursor is returned in the 'nextToken' field. Passing this as the 'nextToken' query parameter will fetch the next page.
+
 When the value of 'nextToken' field is an empty string, there are no more wallets.
 
 ### Example
@@ -131,11 +137,7 @@ Name | Type | Description  | Notes
 # **settleWallet**
 > WalletOperationOutput settleWallet(id, settleOperationInput)
 
-Settle a wallet, settle amount will be transferred to the payment processor or the merchant as specified at the time of creation of the wallet. Supply the unique id that was used when the wallet was created.
-
-If the settle amount is less than the current wallet balance, the requested amount will be sent to the seller. The remaining amount will be refunded to the buyer. At the end of settle operation, the wallet balance will be zero.
-
-If the settle amount is more than the current wallet balance, no action is performed.
+This method settles a specific amount of an ERC-20 token of a wallet to the transferAddress specified during [Generate Wallet](#generatewallet). And remaining balance (if any) will be refunded to the buyerAddress specified during [Generate Wallet](#generatewallet).
 
 
 ### Example
@@ -170,7 +172,7 @@ async function settleWallet(id: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| Unique identifier of the wallet (specified during [Create Wallet](#createwallet)) to settle
+ **id** | **string**| Unique identifier of the wallet (specified during [Generate Wallet](#generatewallet)) to settle
  **walletSettleOperationInput** | [**WalletSettleOperationInput**](../Model/WalletSettleOperationInput.md)| Specify the token and amount to settle. |
 
 
@@ -181,9 +183,7 @@ Name | Type | Description  | Notes
 # **refundWallet**
 > WalletOperationOutput refundWallet(id, refundOperationInput)
 
-Refund wallet. The entire wallet amount will be transferred to the buyer. Supply the unique id that was used when the wallet was created.
-
-At the end of refund operation, the wallet balance will be zero.
+This method refunds the balance of an ERC-20 token of a wallet to the buyerAddress specified during [Generate Wallet](#generatewallet).
 
 ### Example
 ```javascript
@@ -215,7 +215,7 @@ async function refundWallet(id: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| Unique identifier of the wallet (specified during [Create Wallet](#createwallet)) to refund |
+ **id** | **string**| Unique identifier of the wallet (specified during [Generate Wallet](#generatewallet)) to refund |
  **walletRefundOperationInput** | [**WalletRefundOperationInput**](../Model/WalletRefundOperationInput.md)| Specify the token to refund. |
 
 
@@ -227,7 +227,7 @@ Name | Type | Description  | Notes
 # **getWalletOperation**
 > WalletOperation getWalletOperation($id, $txid)
 
-Return a specific operation of the wallet
+This method retrieves an operation of a wallet.
 
 ### Example
 ```javascript
@@ -253,20 +253,26 @@ async function getOperation(id: string, txId: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| Unique identifier of the wallet (specified during [Create Wallet](#createwallet)) |
+ **id** | **string**| Unique identifier of the wallet (specified during [Generate Wallet](#generatewallet)) |
  **txid** | **string**| Transaction ID of the operation (returned during [Refund Wallet](#refundwallet) / [Settle Wallet](#settlewallet)) to retrieve |
 
 ### Return type
 
 [**WalletOperation**](../Model/WalletOperation.md)
 
-# **getWalletOperations**
-> PaginatedWalletOperations getWalletOperations(id, nextToken)
+# **listWalletOperations**
 
-This method retrieves the list of wallet operations performed by the mechant on a specific wallet.
-The list of wallet operations is returned as an array in the 'results' field. The list is restricted to a maximum of 100 wallet operations.
-If there are more wallet operations a cursor is passed in the 'nextToken' field. Passing this as the 'nextToken' query parameter will fetch the next page.
-When the value of 'nextToken' field is an empty string, there are no more wallet operations.
+> PaginatedWalletOperations listWalletOperations(id, nextToken)
+
+This method retrieves all operations of a wallet.
+
+### Pagination
+
+The list of operations is returned as an array in the 'results' field. The list is restricted to a maximum of 100 operations per page.
+
+If there are more than 100 operations for a wallet, a cursor is passed in the 'nextToken' field. Passing this as the 'nextToken' query parameter will fetch the next page.
+
+When the value of 'nextToken' field is an empty string, there are no more operations.
 
 ### Example
 ```javascript
@@ -278,7 +284,7 @@ const bleumiPay = new Erc20PaymentsApi();
 async function listWalletOperations(id: string, nextToken: string) {
     try {
         bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
-        const response = await bleumiPay.getWalletOperations(id, nextToken);
+        const response = await bleumiPay.listWalletOperations(id, nextToken);
         const paginatedWalletOperations = response.body;
         console.log(JSON.stringify(paginatedWalletOperations));
     } catch (err) {
@@ -292,8 +298,9 @@ async function listWalletOperations(id: string, nextToken: string) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| Unique identifier of the wallet (specified during [Create Wallet](#createwallet)) |
+ **id** | **string**| Unique identifier of the wallet (specified during [Generate Wallet](#generatewallet)) |
  **nextToken** | **string**| The token to fetch the next page, supply blank value to get the first page of wallet operations | [optional]
+
 
 ### Return type
 

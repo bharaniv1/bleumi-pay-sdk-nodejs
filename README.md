@@ -1,4 +1,9 @@
+<img src="https://pay.bleumi.com/wp-content/uploads/2019/04/logo_dark_bleumi_invoice_6797x1122.png" height="30">
+
+
 # Bleumi Pay SDK for NodeJS
+
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/bleumi/bleumi-pay-sdk-nodejs/master/LICENSE)
 
 The Bleumi Pay SDK is a one-stop shop to help you integrate ERC-20 payments into your business or application. The SDK bundles [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction) into one SDK to ease implementation and support.
 
@@ -26,7 +31,7 @@ Before you can begin using these TypeScript definitions with your project, you n
 
 #### Obtain An API Key
 
-Bleumi Pay SDK uses API keys to authenticate requests. You can obtain an API key through the [Bleumi Pay developer portal](https://pay.bleumi.com/app/).
+Bleumi Pay SDK uses API keys to authenticate requests. You can obtain an API key through the [Bleumi Pay Dashboard](https://pay.bleumi.com/app/).
 
 ### Install Package
 
@@ -40,7 +45,7 @@ npm install @bleumi/pay-sdk -g
 
 ### Run Sample Code
 
-The following code creates a wallet to accept payment from the buyer specific for the ECR-20 Token.
+The following code generates a wallet to accept payment from the buyer specific for the ECR-20 Token.
 
 ```javascript
 import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys, WalletCreateInput, EthAddress, EthNetwork } from '@bleumi/pay-sdk';
@@ -48,7 +53,7 @@ import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys, WalletCreateInput, EthAddres
 // Instantiate client
 const bleumiPay = new Erc20PaymentsApi();
 
-async function createWallet(id: string) {
+async function generateWallet(id: string) {
     try {
         bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
         const buyer = new EthAddress('<BUYER_ADDR>');
@@ -60,7 +65,7 @@ async function createWallet(id: string) {
         walletCreateInput.transferAddress = merchant;
 
         const chain = EthNetwork.Ropsten;
-        const response = await bleumiPay.createWallet(walletCreateInput, chain);
+        const response = await bleumiPay.generateWallet(walletCreateInput, chain);
         const walletCreateOutput = response.body;
         console.log(JSON.stringify(walletCreateOutput));
     } catch (err) {
@@ -77,13 +82,13 @@ More examples can be found under each method in [SDK Classes](README.md#sdk-clas
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-Erc20PaymentsApi | [**createWallet**](docs/Api/Erc20PaymentsApi.md#createwallet) | **POST** /v1/payment/erc20/wallet | Create an unique wallet address to accept payments for an ERC-20 token from a buyer
+Erc20PaymentsApi | [**generateWallet**](docs/Api/Erc20PaymentsApi.md#generatewallet) | **POST** /v1/payment/erc20/wallet | Generate an unique wallet address to accept payments for an ERC-20 token from a buyer
 Erc20PaymentsApi | [**getWallet**](docs/Api/Erc20PaymentsApi.md#getwallet) | **GET** /v1/payment/erc20/wallet/{id} | Return a specific wallet
 Erc20PaymentsApi | [**listWallets**](docs/Api/Erc20PaymentsApi.md#listwallets) | **GET** /v1/payment/erc20/wallet | Returns a list of wallets
 Erc20PaymentsApi | [**settleWallet**](docs/Api/Erc20PaymentsApi.md#settlewallet) | **POST** /v1/payment/erc20/wallet/{id}/settle | Settle a payment, amount received will be transferred even if less than payment amount
 Erc20PaymentsApi | [**refundWallet**](docs/Api/Erc20PaymentsApi.md#refundwallet) | **POST** /v1/payment/erc20/wallet/{id}/refund | Refund wallet
 Erc20PaymentsApi | [**getWalletOperation**](docs/Api/Erc20PaymentsApi.md#getwalletoperation) | **GET** /v1/payment/erc20/wallet/{id}/operation/{txid} | Return a specific operation of the wallet
-Erc20PaymentsApi | [**getWalletOperations**](docs/Api/Erc20PaymentsApi.md#getwalletoperations) | **GET** /v1/payment/erc20/wallet/{id}/operation | Return the list of operations performed by the mechant on a specific wallet
+Erc20PaymentsApi | [**listWalletOperations**](docs/Api/Erc20PaymentsApi.md#listwalletoperations) | **GET** /v1/payment/erc20/wallet/{id}/operation | Return the list of operations performed by the mechant on a specific wallet
 
 ## Documentation For Models
 
@@ -111,4 +116,4 @@ Erc20PaymentsApi | [**getWalletOperations**](docs/Api/Erc20PaymentsApi.md#getwal
 
 Copyright 2019 Bleumi, Inc.
 
-Code licensed under the [MIT License](docs/MITLicense.md).
+Code licensed under the [MIT License](LICENSE).
