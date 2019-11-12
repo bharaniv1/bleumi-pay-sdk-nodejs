@@ -89,8 +89,8 @@ export class Erc20PaymentsApi {
      * @param walletCreateInput 
      * @param chain Ethereum network in which wallet is to be created.
      */
-    public async createWallet (walletCreateInput: WalletCreateInput, chain?: EthNetwork, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: WalletCreateOutput;  }> {
-        const localVarPath = this.basePath + '/v1/payment/erc20/wallet';
+    public async generateWallet (walletCreateInput: WalletCreateInput, chain?: EthNetwork, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: WalletCreateOutput;  }> {
+        const localVarPath = this.basePath + '/v1/payment/eth/wallet';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         const produces = ['application/json'];
@@ -104,7 +104,7 @@ export class Erc20PaymentsApi {
 
         // verify required parameter 'walletCreateInput' is not null or undefined
         if (walletCreateInput === null || walletCreateInput === undefined) {
-            throw new Error('Required parameter walletCreateInput was null or undefined when calling createWallet.');
+            throw new Error('Required parameter walletCreateInput was null or undefined when calling generateWallet.');
         }
 
         if (chain !== undefined) {
@@ -159,7 +159,7 @@ export class Erc20PaymentsApi {
      * @param id Unique ID identifying the wallet in your system
      */
     public async getWallet (id: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: Wallet;  }> {
-        const localVarPath = this.basePath + '/v1/payment/erc20/wallet/{id}'
+        const localVarPath = this.basePath + '/v1/payment/eth/wallet/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -225,7 +225,7 @@ export class Erc20PaymentsApi {
      * @param txid ID of a specific operation of the wallet
      */
     public async getWalletOperation (id: string, txid: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: WalletOperation;  }> {
-        const localVarPath = this.basePath + '/v1/payment/erc20/wallet/{id}/operation/{txid}'
+        const localVarPath = this.basePath + '/v1/payment/eth/wallet/{id}/operation/{txid}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)))
             .replace('{' + 'txid' + '}', encodeURIComponent(String(txid)));
         let localVarQueryParameters: any = {};
@@ -296,8 +296,8 @@ export class Erc20PaymentsApi {
      * @param id Unique ID identifying the wallet in your system
      * @param nextToken Cursor to start results from
      */
-    public async getWalletOperations (id: string, nextToken?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: PaginatedWalletOperations;  }> {
-        const localVarPath = this.basePath + '/v1/payment/erc20/wallet/{id}/operation'
+    public async listWalletOperations (id: string, nextToken?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: PaginatedWalletOperations;  }> {
+        const localVarPath = this.basePath + '/v1/payment/eth/wallet/{id}/operation'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -312,7 +312,7 @@ export class Erc20PaymentsApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getWalletOperations.');
+            throw new Error('Required parameter id was null or undefined when calling listWalletOperations.');
         }
 
         if (nextToken !== undefined) {
@@ -369,7 +369,7 @@ export class Erc20PaymentsApi {
      * @param endAt Get wallets till this timestamp
      */
     public async listWallets (nextToken?: string, sortBy?: 'createdAt' | 'updatedAt', startAt?: string, endAt?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: PaginatedWallets;  }> {
-        const localVarPath = this.basePath + '/v1/payment/erc20/wallet';
+        const localVarPath = this.basePath + '/v1/payment/eth/wallet';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         const produces = ['application/json'];
@@ -445,7 +445,7 @@ export class Erc20PaymentsApi {
      * @param walletRefundOperationInput Request body - used to specify the token to refund.
      */
     public async refundWallet (id: string, walletRefundOperationInput: WalletRefundOperationInput, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: WalletOperationOutput;  }> {
-        const localVarPath = this.basePath + '/v1/payment/erc20/wallet/{id}/refund'
+        const localVarPath = this.basePath + '/v1/payment/eth/wallet/{id}/refund'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -517,7 +517,7 @@ export class Erc20PaymentsApi {
      * @param walletSettleOperationInput Request body - used to specify the amount to settle.
      */
     public async settleWallet (id: string, walletSettleOperationInput: WalletSettleOperationInput, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.ClientResponse; body: WalletOperationOutput;  }> {
-        const localVarPath = this.basePath + '/v1/payment/erc20/wallet/{id}/settle'
+        const localVarPath = this.basePath + '/v1/payment/eth/wallet/{id}/settle'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);

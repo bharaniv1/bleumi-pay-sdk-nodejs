@@ -1,6 +1,6 @@
 {
     "name": "@bleumi/pay-sdk",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "NodeJS SDK for Bleumi Pay API",
     "repository": {
         "type": "git",
@@ -15,7 +15,18 @@
     },
     "author": "Bleumi",
     "license": "MIT",
-    "keywords": ["payment-gateway", "cryptopayments", "erc-20", "ethereum", "Bleumi Pay API"],
+    "keywords": [
+        "payment-gateway",
+        "cryptopayments",
+        "paymentprocessing",
+        "stablecoins",
+        "ethereum",
+        "stellar",
+        "algorand",
+        "xDAI",
+        "bitcoin",
+        "Bleumi Pay API"
+    ],
     "dependencies": {
         "bluebird": "^3.5.0",
         "request": "^2.81.0",
