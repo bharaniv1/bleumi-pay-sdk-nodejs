@@ -101,7 +101,6 @@ PayoutsApi | [**listPayouts**](docs/Api/PayoutsApi.md#listPayouts) | **GET** /v1
  - [BadRequest](docs/Model/BadRequest.md)
  - [Chain](docs/Model/Chain.md)
  - [CheckoutToken](docs/Model/CheckoutToken.md)
- - [CheckoutTokens](docs/Model/CheckoutTokens.md)
  - [CreateCheckoutUrlRequest](docs/Model/CreateCheckoutUrlRequest.md)
  - [CreateCheckoutUrlResponse](docs/Model/CreateCheckoutUrlResponse.md)
  - [CreatePaymentRequest](docs/Model/CreatePaymentRequest.md)
