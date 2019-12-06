@@ -11,35 +11,23 @@
  */
 
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
+export class WalletAddress {
     /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
+    * Wallet address for the payment in the network
     */
-    'errorCode': string;
-    /**
-    * Error description
-    */
-    'errorMessage'?: string;
+    'addr': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
-            "type": "string"
-        },
-        {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
+            "name": "addr",
+            "baseName": "addr",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return WalletAddress.attributeTypeMap;
     }
 }
 

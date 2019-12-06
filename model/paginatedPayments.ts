@@ -10,36 +10,34 @@
  * Do not edit the class manually.
  */
 
+import { Payment } from './payment';
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
+export class PaginatedPayments {
     /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
+    * List of payments in the current page
     */
-    'errorCode': string;
+    'results': Array<Payment>;
     /**
-    * Error description
+    * Cursor to fetch next page of results, empty if no more results
     */
-    'errorMessage'?: string;
+    'nextToken'?: string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
-            "type": "string"
+            "name": "results",
+            "baseName": "results",
+            "type": "Array<Payment>"
         },
         {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
+            "name": "nextToken",
+            "baseName": "nextToken",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return PaginatedPayments.attributeTypeMap;
     }
 }
 

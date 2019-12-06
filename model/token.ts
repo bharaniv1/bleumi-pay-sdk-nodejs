@@ -12,9 +12,9 @@
 
 import { BadRequest } from "./badRequest";
 
-export class EthAddress {
+export class Token {
     /**
-    * Valid Ethereum address string should pass validation pattern /^0x[a-fA-F0-9]{40}$/
+    * ETH - for Ethereum ; XDAI - for xDai ; XDAIT - for xDai Testnet ; <contract address of ERC-20 token> - for ERC-20 Tokens;
     */
     //'addr': string;
 
@@ -30,16 +30,16 @@ export class EthAddress {
         }    ];
 
     static getAttributeTypeMap() {
-        return EthAddress.attributeTypeMap;
+        return Token.attributeTypeMap;
     }
 
     get addr(): string {
         return this._addr;
     }
 
-    isEthAddress(value: string) {
+    isToken(value: string) {
         var regex = /^0x[a-fA-F0-9]{40}$/
-        if (regex.test(value)) {
+        if (regex.test(value)||(value=="ETH")||(value=="XDAI")||(value=="XDAIT")) {
             return true;
         } else {
             return false;
@@ -47,25 +47,26 @@ export class EthAddress {
     }
 
     set addr(address: string){
-        if (this.isEthAddress(address)) {
+        if (this.isToken(address)) {
             this._addr = address;
         } else {
             var badRequest = new BadRequest();
             badRequest.errorCode = "400";
-            badRequest.errorMessage = "Not a valid Ethereum address" ;
+            badRequest.errorMessage = "Not a valid Token" ;
             throw badRequest; 
         }
     }
 
     constructor(public address: string) {
-        if (this.isEthAddress(address)) {
+        if (this.isToken(address)) {
             this._addr = address;
         } else {
             var badRequest = new BadRequest();
             badRequest.errorCode = "400";
-            badRequest.errorMessage = "Not a valid Ethereum address" ;
+            badRequest.errorMessage = "Not a valid Token" ;
             throw badRequest; 
         }
     }
+
 }
 

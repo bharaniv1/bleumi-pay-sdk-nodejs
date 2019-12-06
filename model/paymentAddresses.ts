@@ -10,36 +10,25 @@
  * Do not edit the class manually.
  */
 
+import { WalletAddress } from './walletAddress';
 
 /**
-* Request does not meet API specifications
+* Payment addresses
 */
-export class BadRequest {
-    /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
-    */
-    'errorCode': string;
-    /**
-    * Error description
-    */
-    'errorMessage'?: string;
+export class PaymentAddresses {
+    'ethereum'?: { [key: string]: WalletAddress; };
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
-            "type": "string"
-        },
-        {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
-            "type": "string"
+            "name": "ethereum",
+            "baseName": "ethereum",
+            "type": "{ [key: string]: WalletAddress; }"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return PaymentAddresses.attributeTypeMap;
     }
 }
 

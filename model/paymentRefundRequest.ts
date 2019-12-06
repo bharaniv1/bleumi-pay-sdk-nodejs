@@ -10,36 +10,22 @@
  * Do not edit the class manually.
  */
 
+import { Token } from './token';
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
-    /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
-    */
-    'errorCode': string;
-    /**
-    * Error description
-    */
-    'errorMessage'?: string;
+export class PaymentRefundRequest {
+    'token': Token;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
-            "type": "string"
-        },
-        {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
-            "type": "string"
+            "name": "token",
+            "baseName": "token",
+            "type": "Token"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return PaymentRefundRequest.attributeTypeMap;
     }
 }
 

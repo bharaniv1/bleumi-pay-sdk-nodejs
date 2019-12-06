@@ -1,5 +1,9 @@
-export * from './erc20PaymentsApi';
-import { Erc20PaymentsApi } from './erc20PaymentsApi';
+export * from './hostedCheckoutsApi';
+import { HostedCheckoutsApi } from './hostedCheckoutsApi';
+export * from './paymentsApi';
+import { PaymentsApi } from './paymentsApi';
+export * from './payoutsApi';
+import { PayoutsApi } from './payoutsApi';
 import * as fs from 'fs';
 import * as http from 'http';
 
@@ -20,4 +24,4 @@ export interface RequestDetailedFile {
 
 export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
-export const APIS = [Erc20PaymentsApi];
+export const APIS = [HostedCheckoutsApi, PaymentsApi, PayoutsApi];

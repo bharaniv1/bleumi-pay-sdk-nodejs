@@ -11,35 +11,23 @@
  */
 
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
+export class CreatePayoutResponse {
     /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
+    * Unique id generated for the given txid
     */
-    'errorCode': string;
-    /**
-    * Error description
-    */
-    'errorMessage'?: string;
+    'salt': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
-            "type": "string"
-        },
-        {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
+            "name": "salt",
+            "baseName": "salt",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return CreatePayoutResponse.attributeTypeMap;
     }
 }
 

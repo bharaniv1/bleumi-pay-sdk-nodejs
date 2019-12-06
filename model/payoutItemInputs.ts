@@ -10,51 +10,43 @@
  * Do not edit the class manually.
  */
 
+import { Payout } from './payout';
 
-export class WalletBalance {
+export class PayoutItemInputs {
     /**
-    * Token balance for the wallet
+    * Unique identifier generated for the txid of the payout (specified during Create a Payout).
     */
-    'balance': string;
+    'salt': string;
     /**
-    * Token balance for the wallet in Ethereum format
+    * Token used for the payout
     */
-    'tokenBalance': string;
+    'token': string;
     /**
-    * Token decimal places
+    * Array of payments to be made in this payout. This is an atomic transaction (i.e. either all payments are processed or all of them are rejected).
     */
-    'tokenDecimals': number;
-    /**
-    * Block in which the balance was last updated
-    */
-    'blockNum': string;
+    'payouts': Array<Payout>;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "balance",
-            "baseName": "balance",
+            "name": "salt",
+            "baseName": "salt",
             "type": "string"
         },
         {
-            "name": "tokenBalance",
-            "baseName": "token_balance",
+            "name": "token",
+            "baseName": "token",
             "type": "string"
         },
         {
-            "name": "tokenDecimals",
-            "baseName": "token_decimals",
-            "type": "number"
-        },
-        {
-            "name": "blockNum",
-            "baseName": "blockNum",
-            "type": "string"
+            "name": "payouts",
+            "baseName": "payouts",
+            "type": "Array<Payout>"
         }    ];
 
     static getAttributeTypeMap() {
-        return WalletBalance.attributeTypeMap;
+        return PayoutItemInputs.attributeTypeMap;
     }
 }
 

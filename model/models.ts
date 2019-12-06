@@ -1,36 +1,66 @@
 export * from './badRequest';
+export * from './chain';
+export * from './checkoutToken';
+export * from './createCheckoutUrlRequest';
+export * from './createCheckoutUrlResponse';
+export * from './createPaymentRequest';
+export * from './createPaymentResponse';
+export * from './createPayoutRequest';
+export * from './createPayoutResponse';
 export * from './ethAddress';
-export * from './ethNetwork';
-export * from './paginatedWalletOperations';
-export * from './paginatedWallets';
-export * from './wallet';
+export * from './networkBalance';
+export * from './paginatedPaymentOperations';
+export * from './paginatedPayments';
+export * from './paginatedPayoutItems';
+export * from './payment';
+export * from './paymentAddresses';
+export * from './paymentBalances';
+export * from './paymentOperation';
+export * from './paymentOperationInputs';
+export * from './paymentOperationResponse';
+export * from './paymentRefundRequest';
+export * from './paymentSettleRequest';
+export * from './payout';
+export * from './payoutItem';
+export * from './payoutItemInputs';
+export * from './token';
+export * from './validateCheckoutRequest';
+export * from './validateCheckoutResponse';
+export * from './walletAddress';
 export * from './walletBalance';
-export * from './walletCreateInput';
-export * from './walletCreateOutput';
-export * from './walletInputs';
-export * from './walletOperation';
-export * from './walletOperationInputs';
-export * from './walletOperationOutput';
-export * from './walletRefundOperationInput';
-export * from './walletSettleOperationInput';
 
 import localVarRequest = require('request');
 
 import { BadRequest } from './badRequest';
+import { Chain } from './chain';
+import { CheckoutToken } from './checkoutToken';
+import { CreateCheckoutUrlRequest } from './createCheckoutUrlRequest';
+import { CreateCheckoutUrlResponse } from './createCheckoutUrlResponse';
+import { CreatePaymentRequest } from './createPaymentRequest';
+import { CreatePaymentResponse } from './createPaymentResponse';
+import { CreatePayoutRequest } from './createPayoutRequest';
+import { CreatePayoutResponse } from './createPayoutResponse';
 import { EthAddress } from './ethAddress';
-import { EthNetwork } from './ethNetwork';
-import { PaginatedWalletOperations } from './paginatedWalletOperations';
-import { PaginatedWallets } from './paginatedWallets';
-import { Wallet } from './wallet';
+import { NetworkBalance } from './networkBalance';
+import { PaginatedPaymentOperations } from './paginatedPaymentOperations';
+import { PaginatedPayments } from './paginatedPayments';
+import { PaginatedPayoutItems } from './paginatedPayoutItems';
+import { Payment } from './payment';
+import { PaymentAddresses } from './paymentAddresses';
+import { PaymentBalances } from './paymentBalances';
+import { PaymentOperation } from './paymentOperation';
+import { PaymentOperationInputs } from './paymentOperationInputs';
+import { PaymentOperationResponse } from './paymentOperationResponse';
+import { PaymentRefundRequest } from './paymentRefundRequest';
+import { PaymentSettleRequest } from './paymentSettleRequest';
+import { Payout } from './payout';
+import { PayoutItem } from './payoutItem';
+import { PayoutItemInputs } from './payoutItemInputs';
+import { Token } from './token';
+import { ValidateCheckoutRequest } from './validateCheckoutRequest';
+import { ValidateCheckoutResponse } from './validateCheckoutResponse';
+import { WalletAddress } from './walletAddress';
 import { WalletBalance } from './walletBalance';
-import { WalletCreateInput } from './walletCreateInput';
-import { WalletCreateOutput } from './walletCreateOutput';
-import { WalletInputs } from './walletInputs';
-import { WalletOperation } from './walletOperation';
-import { WalletOperationInputs } from './walletOperationInputs';
-import { WalletOperationOutput } from './walletOperationOutput';
-import { WalletRefundOperationInput } from './walletRefundOperationInput';
-import { WalletSettleOperationInput } from './walletSettleOperationInput';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -45,24 +75,39 @@ let primitives = [
                  ];
 
 let enumsMap: {[index: string]: any} = {
-        "EthNetwork": EthNetwork,
+        "Chain": Chain,
 }
 
 let typeMap: {[index: string]: any} = {
     "BadRequest": BadRequest,
+    "CheckoutToken": CheckoutToken,
+    "CreateCheckoutUrlRequest": CreateCheckoutUrlRequest,
+    "CreateCheckoutUrlResponse": CreateCheckoutUrlResponse,
+    "CreatePaymentRequest": CreatePaymentRequest,
+    "CreatePaymentResponse": CreatePaymentResponse,
+    "CreatePayoutRequest": CreatePayoutRequest,
+    "CreatePayoutResponse": CreatePayoutResponse,
     "EthAddress": EthAddress,
-    "PaginatedWalletOperations": PaginatedWalletOperations,
-    "PaginatedWallets": PaginatedWallets,
-    "Wallet": Wallet,
+    "NetworkBalance": NetworkBalance,
+    "PaginatedPaymentOperations": PaginatedPaymentOperations,
+    "PaginatedPayments": PaginatedPayments,
+    "PaginatedPayoutItems": PaginatedPayoutItems,
+    "Payment": Payment,
+    "PaymentAddresses": PaymentAddresses,
+    "PaymentBalances": PaymentBalances,
+    "PaymentOperation": PaymentOperation,
+    "PaymentOperationInputs": PaymentOperationInputs,
+    "PaymentOperationResponse": PaymentOperationResponse,
+    "PaymentRefundRequest": PaymentRefundRequest,
+    "PaymentSettleRequest": PaymentSettleRequest,
+    "Payout": Payout,
+    "PayoutItem": PayoutItem,
+    "PayoutItemInputs": PayoutItemInputs,
+    "Token": Token,
+    "ValidateCheckoutRequest": ValidateCheckoutRequest,
+    "ValidateCheckoutResponse": ValidateCheckoutResponse,
+    "WalletAddress": WalletAddress,
     "WalletBalance": WalletBalance,
-    "WalletCreateInput": WalletCreateInput,
-    "WalletCreateOutput": WalletCreateOutput,
-    "WalletInputs": WalletInputs,
-    "WalletOperation": WalletOperation,
-    "WalletOperationInputs": WalletOperationInputs,
-    "WalletOperationOutput": WalletOperationOutput,
-    "WalletRefundOperationInput": WalletRefundOperationInput,
-    "WalletSettleOperationInput": WalletSettleOperationInput,
 }
 
 export class ObjectSerializer {
@@ -117,7 +162,7 @@ export class ObjectSerializer {
             return transformedData;
         } else if (type === "Date") {
             return data.toISOString();
-        } else if (type === "EthAddress") {
+        } else if (type === "EthAddress"||type === "Token") {
             return data.addr;
         } else {
             if (enumsMap[type]) {
@@ -161,6 +206,8 @@ export class ObjectSerializer {
             return new Date(data);
         } else if (type === "EthAddress") {
             return new EthAddress(data);
+        } else if (type === "Token") {
+            return new Token(data);
         } else {
             if (enumsMap[type]) {// is Enum
                 return data;
@@ -194,6 +241,19 @@ export class HttpBasicAuth implements Authentication {
     applyToRequest(requestOptions: localVarRequest.Options): void {
         requestOptions.auth = {
             username: this.username, password: this.password
+        }
+    }
+}
+
+export class HttpBearerAuth implements Authentication {
+    public accessToken: string | (() => string) = '';
+
+    applyToRequest(requestOptions: localVarRequest.Options): void {
+        if (requestOptions && requestOptions.headers) {
+            const accessToken = typeof this.accessToken === 'function'
+                            ? this.accessToken()
+                            : this.accessToken;
+            requestOptions.headers["Authorization"] = "Bearer " + accessToken;
         }
     }
 }
@@ -238,3 +298,5 @@ export class VoidAuth implements Authentication {
         // Do nothing
     }
 }
+
+export type Interceptor = (requestOptions: localVarRequest.Options) => (Promise<void> | void);

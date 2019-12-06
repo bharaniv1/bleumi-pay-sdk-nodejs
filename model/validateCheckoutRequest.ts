@@ -11,50 +11,50 @@
  */
 
 
-export class WalletBalance {
+export class ValidateCheckoutRequest {
     /**
-    * Token balance for the wallet
+    * Payment Details. Passed as GET parameter in successUrl.
     */
-    'balance': string;
+    'hmacInput': string;
     /**
-    * Token balance for the wallet in Ethereum format
+    * KeyId used to generate the HMAC. Passed as GET parameter in successUrl.
     */
-    'tokenBalance': string;
+    'hmacKeyId': string;
     /**
-    * Token decimal places
+    * Algorithm used to generate the HMAC. Passed as GET parameter in successUrl.
     */
-    'tokenDecimals': number;
+    'hmacAlg': string;
     /**
-    * Block in which the balance was last updated
+    * HMAC passed as GET parameter in successUrl.
     */
-    'blockNum': string;
+    'hmacValue': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "balance",
-            "baseName": "balance",
+            "name": "hmacInput",
+            "baseName": "hmac_input",
             "type": "string"
         },
         {
-            "name": "tokenBalance",
-            "baseName": "token_balance",
+            "name": "hmacKeyId",
+            "baseName": "hmac_keyId",
             "type": "string"
         },
         {
-            "name": "tokenDecimals",
-            "baseName": "token_decimals",
-            "type": "number"
+            "name": "hmacAlg",
+            "baseName": "hmac_alg",
+            "type": "string"
         },
         {
-            "name": "blockNum",
-            "baseName": "blockNum",
+            "name": "hmacValue",
+            "baseName": "hmac_value",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return WalletBalance.attributeTypeMap;
+        return ValidateCheckoutRequest.attributeTypeMap;
     }
 }
 

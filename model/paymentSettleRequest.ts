@@ -10,36 +10,31 @@
  * Do not edit the class manually.
  */
 
+import { Token } from './token';
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
+export class PaymentSettleRequest {
+    'token': Token;
     /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
+    * Amount to be settled
     */
-    'errorCode': string;
-    /**
-    * Error description
-    */
-    'errorMessage'?: string;
+    'amount': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
-            "type": "string"
+            "name": "token",
+            "baseName": "token",
+            "type": "Token"
         },
         {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
+            "name": "amount",
+            "baseName": "amount",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return PaymentSettleRequest.attributeTypeMap;
     }
 }
 

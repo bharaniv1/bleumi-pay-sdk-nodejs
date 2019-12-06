@@ -11,50 +11,59 @@
  */
 
 
-export class WalletBalance {
+export class CheckoutToken {
     /**
-    * Token balance for the wallet
+    * The chain in which the token is defined
     */
-    'balance': string;
+    'chain': string;
     /**
-    * Token balance for the wallet in Ethereum format
+    * The destination address when payments are received in this token
     */
-    'tokenBalance': string;
+    'transferAddress': string;
+    /**
+    * Name of the token
+    */
+    'name': string;
+    /**
+    * Symbol of the token
+    */
+    'symbol': string;
     /**
     * Token decimal places
     */
-    'tokenDecimals': number;
-    /**
-    * Block in which the balance was last updated
-    */
-    'blockNum': string;
+    'decimals': number;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "balance",
-            "baseName": "balance",
+            "name": "chain",
+            "baseName": "chain",
             "type": "string"
         },
         {
-            "name": "tokenBalance",
-            "baseName": "token_balance",
+            "name": "transferAddress",
+            "baseName": "transferAddress",
             "type": "string"
         },
         {
-            "name": "tokenDecimals",
-            "baseName": "token_decimals",
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "symbol",
+            "baseName": "symbol",
+            "type": "string"
+        },
+        {
+            "name": "decimals",
+            "baseName": "decimals",
             "type": "number"
-        },
-        {
-            "name": "blockNum",
-            "baseName": "blockNum",
-            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return WalletBalance.attributeTypeMap;
+        return CheckoutToken.attributeTypeMap;
     }
 }
 

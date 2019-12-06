@@ -11,35 +11,32 @@
  */
 
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
+export class CreateCheckoutUrlResponse {
     /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
+    * Unique identifier generated for this checkout URL
     */
-    'errorCode': string;
+    'id': string;
     /**
-    * Error description
+    * URL for buyer to complete payment
     */
-    'errorMessage'?: string;
+    'url': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
+            "name": "id",
+            "baseName": "id",
             "type": "string"
         },
         {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
+            "name": "url",
+            "baseName": "url",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return CreateCheckoutUrlResponse.attributeTypeMap;
     }
 }
 

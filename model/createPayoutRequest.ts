@@ -10,36 +10,41 @@
  * Do not edit the class manually.
  */
 
+import { Payout } from './payout';
+import { Token } from './token';
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
+export class CreatePayoutRequest {
     /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
+    * Unique identifier for this payout
     */
-    'errorCode': string;
+    'txid': string;
+    'token': Token;
     /**
-    * Error description
+    * Array of payments to be made in this payout. This is an atomic transaction (i.e. either all payments are processed or all of them are rejected).
     */
-    'errorMessage'?: string;
+    'payouts': Array<Payout>;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
+            "name": "txid",
+            "baseName": "txid",
             "type": "string"
         },
         {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
-            "type": "string"
+            "name": "token",
+            "baseName": "token",
+            "type": "Token"
+        },
+        {
+            "name": "payouts",
+            "baseName": "payouts",
+            "type": "Array<Payout>"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return CreatePayoutRequest.attributeTypeMap;
     }
 }
 

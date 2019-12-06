@@ -11,35 +11,32 @@
  */
 
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
+export class Payout {
     /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
+    * Address of receiver. This address must be able to receive payments from smart contracts.
     */
-    'errorCode': string;
+    'transferAddress': string;
     /**
-    * Error description
+    * Amount of token to transfer
     */
-    'errorMessage'?: string;
+    'amount': string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
+            "name": "transferAddress",
+            "baseName": "transferAddress",
             "type": "string"
         },
         {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
+            "name": "amount",
+            "baseName": "amount",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return Payout.attributeTypeMap;
     }
 }
 

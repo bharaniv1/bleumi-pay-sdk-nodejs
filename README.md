@@ -5,9 +5,9 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/bleumi/bleumi-pay-sdk-nodejs/master/LICENSE)
 
-The Bleumi Pay SDK is a one-stop shop to help you integrate ERC-20 payments into your business or application. The SDK bundles [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction) into one SDK to ease implementation and support.
+The Bleumi Pay SDK is a one-stop shop to help you integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application. The SDK bundles [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction) into one SDK to ease implementation and support.
 
-bleumi-pay-sdk-nodejs is a TypeScrpit-NodeJS library that provides an interface between your NodeJS application and [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction). This tutorial covers the basics, including examples, needed to use the SDK.
+**bleumi-pay-sdk-nodejs** is a TypeScrpit-NodeJS library that provides an interface between your NodeJS application and [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction). This tutorial covers the basics, including examples, needed to use the SDK.
 
 ## Getting Started
 
@@ -45,34 +45,35 @@ npm install @bleumi/pay-sdk -g
 
 ### Run Sample Code
 
-The following code generates a wallet to accept payment from the buyer specific for the ECR-20 Token.
+The following code generates a payment request to accept payment from the buyer:
 
 ```javascript
-import { Erc20PaymentsApi, Erc20PaymentsApiApiKeys, WalletCreateInput, EthAddress, EthNetwork } from '@bleumi/pay-sdk';
+import { PaymentsApi, PaymentsApiApiKeys, CreatePaymentRequest, EthAddress, Chain } from '@bleumi/pay-sdk';
 
 // Instantiate client
-const bleumiPay = new Erc20PaymentsApi();
+const bleumiPay = new PaymentsApi();
 
-async function generateWallet(id: string) {
+async function createPayment(id: string) {
     try {
-        bleumiPay.setApiKey(Erc20PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>')
-        const buyer = new EthAddress('<BUYER_ADDR>');
-        const merchant = new EthAddress('<MERCHANT_ADDR>');
+        bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
+        const buyer = new EthAddress('<BUYER_ADDR>'); // Replace <BUYER_ADDR> with the Buyer's Enthereum Network Address
+        const merchant = new EthAddress('<MERCHANT_ADDR>'); // Replace <MERCHANT_ADDR> with the Merchant's Enthereum Network Address
 
-        const walletCreateInput = new WalletCreateInput();
-        walletCreateInput.id = id;
-        walletCreateInput.buyerAddress = buyer;
-        walletCreateInput.transferAddress = merchant;
+        const createPaymentRequest = new CreatePaymentRequest();
+        createPaymentRequest.id = id;
+        createPaymentRequest.buyerAddress = buyer;
+        createPaymentRequest.transferAddress = merchant;
 
-        const chain = EthNetwork.Ropsten;
-        const response = await bleumiPay.generateWallet(walletCreateInput, chain);
-        const walletCreateOutput = response.body;
-        console.log(JSON.stringify(walletCreateOutput));
+        const chain = Chain.Ropsten; // Specify the chain for payment creation
+        const response = await bleumiPay.createPayment(createPaymentRequest, chain);
+        const createPaymentResponse = response.body;
+        console.log(JSON.stringify(createPaymentResponse));
     } catch (err) {
         console.error('Error statusCode:', err.response.statusCode);
         console.error('Error reponse:', err.response.body);
     }
 }
+
 
 ```
 
@@ -82,31 +83,51 @@ More examples can be found under each method in [SDK Classes](README.md#sdk-clas
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-Erc20PaymentsApi | [**generateWallet**](docs/Api/Erc20PaymentsApi.md#generatewallet) | **POST** /v1/payment/eth/wallet | Generate an unique wallet address to accept payments for an ERC-20 token from a buyer
-Erc20PaymentsApi | [**getWallet**](docs/Api/Erc20PaymentsApi.md#getwallet) | **GET** /v1/payment/eth/wallet/{id} | Return a specific wallet
-Erc20PaymentsApi | [**listWallets**](docs/Api/Erc20PaymentsApi.md#listwallets) | **GET** /v1/payment/eth/wallet | Returns a list of wallets
-Erc20PaymentsApi | [**settleWallet**](docs/Api/Erc20PaymentsApi.md#settlewallet) | **POST** /v1/payment/eth/wallet/{id}/settle | Settle a payment, amount received will be transferred even if less than payment amount
-Erc20PaymentsApi | [**refundWallet**](docs/Api/Erc20PaymentsApi.md#refundwallet) | **POST** /v1/payment/eth/wallet/{id}/refund | Refund wallet
-Erc20PaymentsApi | [**getWalletOperation**](docs/Api/Erc20PaymentsApi.md#getwalletoperation) | **GET** /v1/payment/eth/wallet/{id}/operation/{txid} | Return a specific operation of the wallet
-Erc20PaymentsApi | [**listWalletOperations**](docs/Api/Erc20PaymentsApi.md#listwalletoperations) | **GET** /v1/payment/eth/wallet/{id}/operation | Return the list of operations performed by the mechant on a specific wallet
+PaymentsApi | [**createPayment**](docs/Api/PaymentsApi.md#createPayment) | **POST** /v1/payment | Generate a unique wallet address in the specified network to accept payment
+PaymentsApi | [**getPayment**](docs/Api/PaymentsApi.md#getPayment) | **GET** /v1/payment/{id} | Retrieve the wallet addresses &amp; token balances for a given payment
+PaymentsApi | [**listPayments**](docs/PaymentsApi.md#listPayments) | **GET** /v1/payment | Retrieve all payments created.
+PaymentsApi | [**settlePayment**](docs/Api/PaymentsApi.md#settlePayment) | **POST** /v1/payment/{id}/settle | Settle a specific amount of a token for a given payment to the transferAddress and remaining balance (if any) will be refunded to the buyerAddress
+PaymentsApi | [**refundPayment**](docs/Api/PaymentsApi.md#refundPayment) | **POST** /v1/payment/{id}/refund | Refund the balance of a token for a given payment to the buyerAddress
+PaymentsApi | [**getPaymentOperation**](docs/Api/PaymentsApi.md#getPaymentOperation) | **GET** /v1/payment/{id}/operation/{txid} | Retrieve a payment operation for a specific payment.
+PaymentsApi | [**listPaymentOperations**](docs/Api/PaymentsApi.md#listPaymentOperations) | **GET** /v1/payment/{id}/operation | Retrieve all payment operations for a specific payment.
+HostedCheckoutsApi | [**createCheckoutUrl**](docs/Api/HostedCheckoutsApi.md#createCheckoutUrl) | **POST** /v1/payment/hc | Generate a unique checkout URL to accept payment.
+HostedCheckoutsApi | [**listTokens**](docs/Api/HostedCheckoutsApi.md#listTokens) | **GET** /v1/payment/hc/tokens | Retrieve all tokens configured for the Hosted Checkout in your account in the [Bleumi Pay Dashboard](https://pay.bleumi.com/app/).
+HostedCheckoutsApi | [**validateCheckoutPayment**](docs/Api/HostedCheckoutsApi.md#validateCheckoutPayment) | **POST** /v1/payment/hc/validate | Validate the GET parameters passed by Hosted Checkout in successUrl upon successfully completing payment.
+PayoutsApi | [**createPayout**](docs/Api/PayoutsApi.md#createPayout) | **POST** /v1/payout | Create a payout.
+PayoutsApi | [**listPayouts**](docs/Api/PayoutsApi.md#listPayouts) | **GET** /v1/payout | Returns a list of payouts
 
 ## Documentation For Models
 
  - [BadRequest](docs/Model/BadRequest.md)
+ - [Chain](docs/Model/Chain.md)
+ - [CheckoutToken](docs/Model/CheckoutToken.md)
+ - [CheckoutTokens](docs/Model/CheckoutTokens.md)
+ - [CreateCheckoutUrlRequest](docs/Model/CreateCheckoutUrlRequest.md)
+ - [CreateCheckoutUrlResponse](docs/Model/CreateCheckoutUrlResponse.md)
+ - [CreatePaymentRequest](docs/Model/CreatePaymentRequest.md)
+ - [CreatePaymentResponse](docs/Model/CreatePaymentResponse.md)
+ - [CreatePayoutRequest](docs/Model/CreatePayoutRequest.md)
+ - [CreatePayoutResponse](docs/Model/CreatePayoutResponse.md)
  - [EthAddress](docs/Model/EthAddress.md)
- - [EthNetwork](docs/Model/EthNetwork.md)
- - [PaginatedWalletOperations](docs/Model/PaginatedWalletOperations.md)
- - [PaginatedWallets](docs/Model/PaginatedWallets.md)
- - [Wallet](docs/Model/Wallet.md)
+ - [PaginatedPaymentOperations](docs/Model/PaginatedPaymentOperations.md)
+ - [PaginatedPayments](docs/Model/PaginatedPayments.md)
+ - [PaginatedPayoutItems](docs/Model/PaginatedPayoutItems.md)
+ - [Payment](docs/Model/Payment.md)
+ - [PaymentAddresses](docs/Model/PaymentAddresses.md)
+ - [PaymentBalances](docs/Model/PaymentBalances.md)
+ - [PaymentOperation](docs/Model/PaymentOperation.md)
+ - [PaymentOperationInputs](docs/Model/PaymentOperationInputs.md)
+ - [PaymentOperationResponse](docs/Model/PaymentOperationResponse.md)
+ - [PaymentRefundRequest](docs/Model/PaymentRefundRequest.md)
+ - [PaymentSettleRequest](docs/Model/PaymentSettleRequest.md)
+ - [Payout](docs/Model/Payout.md)
+ - [PayoutItem](docs/Model/PayoutItem.md)
+ - [PayoutItemInputs](docs/Model/PayoutItemInputs.md)
+ - [Token](docs/Model/Token.md)
+ - [ValidateCheckoutRequest](docs/Model/ValidateCheckoutRequest.md)
+ - [ValidateCheckoutResponse](docs/Model/ValidateCheckoutResponse.md)
+ - [WalletAddress](docs/Model/WalletAddress.md)
  - [WalletBalance](docs/Model/WalletBalance.md)
- - [WalletCreateInput](docs/Model/WalletCreateInput.md)
- - [WalletCreateOutput](docs/Model/WalletCreateOutput.md)
- - [WalletInputs](docs/Model/WalletInputs.md)
- - [WalletOperation](docs/Model/WalletOperation.md)
- - [WalletOperationInputs](docs/Model/WalletOperationInputs.md)
- - [WalletOperationOutput](docs/Model/WalletOperationOutput.md)
- - [WalletRefundOperationInput](docs/Model/WalletRefundOperationInput.md)
- - [WalletSettleOperationInput](docs/Model/WalletSettleOperationInput.md)
 
 ## Limitations
 

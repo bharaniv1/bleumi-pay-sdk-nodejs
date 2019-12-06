@@ -10,36 +10,37 @@
  * Do not edit the class manually.
  */
 
+import { EthAddress } from './ethAddress';
 
-/**
-* Request does not meet API specifications
-*/
-export class BadRequest {
+export class CreatePaymentRequest {
     /**
-    * Code for error class. Complete list of error codes is available [here](https://pay.bleumi.com/docs/#errors)
+    * Unique ID identifying the payment
     */
-    'errorCode': string;
-    /**
-    * Error description
-    */
-    'errorMessage'?: string;
+    'id': string;
+    'buyerAddress': EthAddress;
+    'transferAddress': EthAddress;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "errorCode",
-            "baseName": "errorCode",
+            "name": "id",
+            "baseName": "id",
             "type": "string"
         },
         {
-            "name": "errorMessage",
-            "baseName": "errorMessage",
-            "type": "string"
+            "name": "buyerAddress",
+            "baseName": "buyerAddress",
+            "type": "EthAddress"
+        },
+        {
+            "name": "transferAddress",
+            "baseName": "transferAddress",
+            "type": "EthAddress"
         }    ];
 
     static getAttributeTypeMap() {
-        return BadRequest.attributeTypeMap;
+        return CreatePaymentRequest.attributeTypeMap;
     }
 }
 
