@@ -71,7 +71,7 @@ The hmac.input GET parameter passed to successUrl contains payment parameters as
             <i>XDAIT</i> - for xDai Testnet<br> 
             <i>ALGO</i> - for Algo <br> 
             <i>&lt;asset id&gt;</i> - for Algorand Standard Asset <br> 
-            <i>&lt;contract address of ERC-20 token&gt;</i> - for ERC-20; Please refer to Please refer to [ERC-20 Tokens](https://pay.bleumi.com/docs/#erc-20) for contract address; </li>
+            <i>&lt;contract address of ERC-20 token&gt;</i> - for ERC-20; Please refer to <a href="https://pay.bleumi.com/docs/#erc-20" target="_blank">ERC-20 Tokens</a> for contract address; </li>
         <li><b>Amount</b> - Token amount for the payment</li>
         <li><b>Number of block confirmations</b><br> 
             <i>12</i> - for ETH<br> 
