@@ -45,7 +45,7 @@ async function createPayment(id: string) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**CreatePaymentRequest**](CreatePaymentRequest.md)| Specify payment creation parameters. |
- **chain** | [**Chain**](.md)| Ethereum network in which payment is to be created. Please refer documentation for [Supported Networks](https://pay.bleumi.com/docs/#supported-networks) |
+ **chain** | [**Chain**](Chain.md)| Ethereum network in which payment is to be created. Please refer documentation for [Supported Networks](https://pay.bleumi.com/docs/#supported-networks) |
 
 ### Return type
 

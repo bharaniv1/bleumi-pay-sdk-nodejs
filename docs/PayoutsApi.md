@@ -11,15 +11,15 @@ This method makes a payout from your Private Payment Processor.
 ### Example
 ```javascript
 
-import { PayoutsApi, PayoutsApiApiKeys } from './api/apis'
-import { CreatePayoutRequest, Chain, Token } from './model/models';
+import { PayoutsApi, PayoutsApiApiKeys } from '@bleumi/pay-sdk';
+import { CreatePayoutRequest, Chain } from '@bleumi/pay-sdk';
 
 // Instantiate clients
 const bleumiPay = new PayoutsApi();
 
 async function createPayoutRequest(id: string) {
     try {
-        bleumiPay.setApiKey(PayoutsApiApiKeys.ApiKeyAuth, apikey.dev)
+        bleumiPay.setApiKey(PayoutsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
 		// This example shows 2 payouts being created
 
 		const createPayoutRequest = new CreatePayoutRequest();
@@ -97,7 +97,7 @@ When the value of 'nextToken' field is an empty string, there are no more payout
 ### Example
 ```javascript
 
-import { PayoutsApi, PayoutsApiApiKeys } from './api/apis'
+import { PayoutsApi, PayoutsApiApiKeys } from '@bleumi/pay-sdk';
 
 // Instantiate clients
 const bleumiPay = new PayoutsApi();
@@ -108,7 +108,7 @@ async function listPayouts() {
         const sortBy = "<SORT_BY>"; // string | Sort payouts by | Eg. "createdAt"
         const startAt = "<START_TIMESTAMP>"; // string | Get payouts from this timestamp | Eg. 1546300800 for 1-JAN-2019
         const endAt = undefined; // string | Get payouts till this timestamp
-        bleumiPay.setApiKey(PayoutsApiApiKeys.ApiKeyAuth, apikey.dev)
+        bleumiPay.setApiKey(PayoutsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
         const response = await bleumiPay.listPayouts(nextToken, sortBy, startAt, endAt);
         const paginatedPayouts = response.body;
         console.log(JSON.stringify(paginatedPayouts));

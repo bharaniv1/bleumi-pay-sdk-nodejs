@@ -48,7 +48,7 @@ npm install @bleumi/pay-sdk -g
 The following code generates a payment request to accept payment from the buyer:
 
 ```javascript
-import { PaymentsApi, PaymentsApiApiKeys, CreatePaymentRequest, EthAddress, Chain } from '@bleumi/pay-sdk';
+import { PaymentsApi, PaymentsApiApiKeys, CreatePaymentRequest, Chain } from '@bleumi/pay-sdk';
 
 // Instantiate client
 const bleumiPay = new PaymentsApi();

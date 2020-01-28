@@ -16,7 +16,7 @@ const bleumiPay = new HostedCheckoutsApi();
 
 async function createCheckoutUrl(id: string) {
     try {
-        bleumiPay.setApiKey(HostedCheckoutsApiApiKeys.ApiKeyAuth, apikey.dev) //Replace <YOUR_API_KEY> with your actual API key
+        bleumiPay.setApiKey(HostedCheckoutsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
 
         const chain = Chain.Goerli;
         const createCheckoutUrlRequest = new CreateCheckoutUrlRequest();
@@ -116,7 +116,7 @@ const bleumiPay = new HostedCheckoutsApi();
 
 async function listTokens() {
     try {
-        bleumiPay.setApiKey(HostedCheckoutsApiApiKeys.ApiKeyAuth, apikey.dev) //Replace <YOUR_API_KEY> with your actual API key
+        bleumiPay.setApiKey(HostedCheckoutsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
 
         const response = await bleumiPay.listTokens();
         const listOutput = response.body;
@@ -133,7 +133,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Array<CheckoutToken>**](CheckoutToken.md)
+[**Array&lt;CheckoutToken&gt;**](CheckoutToken.md)
 
 ### 400 Errors
 
@@ -159,7 +159,7 @@ const bleumiPay = new HostedCheckoutsApi();
 
 async function validateCheckoutPayment() {
     try {
-        bleumiPay.setApiKey(HostedCheckoutsApiApiKeys.ApiKeyAuth, apikey.dev) //Replace <YOUR_API_KEY> with your actual API key
+        bleumiPay.setApiKey(HostedCheckoutsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
         const validateCheckoutRequest = new ValidateCheckoutRequest();
 		
         validateCheckoutRequest.hmacInput = "<INPUT>";  // Eg. goerli|0xbe33cde200e113f4847c66e9498f2c30e81635ad|0x115615dbd0f835344725146fa6343219315f15e5|10|12
