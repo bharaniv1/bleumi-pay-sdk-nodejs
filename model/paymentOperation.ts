@@ -12,6 +12,9 @@
 
 import { PaymentOperationInputs } from './paymentOperationInputs';
 
+/**
+* Payment Operation details
+*/
 export class PaymentOperation {
     /**
     * Transaction ID of the operation
@@ -22,7 +25,7 @@ export class PaymentOperation {
     */
     'chain': string;
     /**
-    * The name of the function invoked on the [payment processor](https://pay.bleumi.com/docs/#payment-processor)
+    * The name of the function invoked on the payment processor
     */
     'funcName': string;
     /**

@@ -9,7 +9,7 @@ This method generates a unique wallet address in the specified network to accept
 ### Example
 ```javascript
 
-import { PaymentsApi, PaymentsApiApiKeys, CreatePaymentRequest, EthAddress, Chain } from '@bleumi/pay-sdk';
+import { PaymentsApi, PaymentsApiApiKeys, CreatePaymentRequest, Chain } from '@bleumi/pay-sdk';
 
 // Instantiate client
 const bleumiPay = new PaymentsApi();
@@ -17,21 +17,24 @@ const bleumiPay = new PaymentsApi();
 async function createPayment(id: string) {
     try {
         bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
-        const buyer = new EthAddress('<BUYER_ADDR>'); // Replace <BUYER_ADDR> with the Buyer's Enthereum Network Address
-        const merchant = new EthAddress('<MERCHANT_ADDR>'); // Replace <MERCHANT_ADDR> with the Merchant's Enthereum Network Address
+        const buyer = '<BUYER_ADDR>'; // Replace <BUYER_ADDR> with the Buyer's Enthereum Network Address
+        const merchant = '<MERCHANT_ADDR>'; // Replace <MERCHANT_ADDR> with the Merchant's Enthereum Network Address
 
         const createPaymentRequest = new CreatePaymentRequest();
         createPaymentRequest.id = id;
         createPaymentRequest.buyerAddress = buyer;
         createPaymentRequest.transferAddress = merchant;
 
-        const chain = Chain.Ropsten;
+        const chain = Chain.Goerli;
         const response = await bleumiPay.createPayment(createPaymentRequest, chain);
         const createPaymentResponse = response.body;
         console.log(JSON.stringify(createPaymentResponse));
     } catch (err) {
-        console.error('Error statusCode:', err.response.statusCode);
-        console.error('Error reponse:', err.response.body);
+        if (err.response) {
+            console.error('Error statusCode:', err.response.statusCode);
+            console.error('Error reponse:', err.response.body);
+        } 
+        console.log('Error message:',err.message);
     }
 }
 
@@ -139,10 +142,11 @@ async function listPayments() {
     try {
         const nextToken = ""; // string | Cursor to start results from
         const sortBy = "<SORT_BY>"; // string | Sort payments by | Eg. "createdAt"
+        const sortOrder = "<SORT_ORDER>"; // string | Sort Order for payments | Eg. "ascending"
         const startAt = "<START_TIMESTAMP>"; // string | Get payments from this timestamp | Eg. 1546300800 for 1-JAN-2019
-        const endAt = ""; // string | Get payments till this timestamp
+        const endAt = undefined; // string | Get payments till this timestamp
         bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>') //Replace <YOUR_API_KEY> with your actual API key
-        const response = await bleumiPay.listPayments(nextToken, sortBy, startAt, endAt);
+        const response = await bleumiPay.listPayments(nextToken, sortBy, sortOrder, startAt, endAt);
         const paginatedPayments = response.body;
         console.log(JSON.stringify(paginatedPayments));
     } catch (err) {
@@ -157,7 +161,8 @@ async function listPayments() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **nextToken** | **String**| Cursor to start results from | [optional]
- **sortBy** | **String**| Sort payments by | [optional] 'createdAt' - results will be sorted by created time in ascending order. <br>'updatedAt' - results will be sorted by last updated time in ascending order.
+ **sortBy** | **String**| Sort payments by | [optional] 'createdAt' - results will be sorted by created time. <br>'updatedAt' - results will be sorted by last updated time.
+ **sortOrder** | **String**| Sort Order for payments | [optional] 'ascending' - results will be sorted in ascending order. <br>'descending' - results will be sorted in descending order.
  **startAt** | **String**| Get payments from this timestamp (unix) | [optional]
  **endAt** | **String**| Get payments till this timestamp (unix) | [optional]
 
@@ -188,7 +193,7 @@ This method settles a specific amount of a token for a given payment to the tran
 ### Example
 ```javascript
 
-import { PaymentsApi, PaymentsApiApiKeys, PaymentSettleRequest, EthAddress } from '@bleumi/pay-sdk';
+import { PaymentsApi, PaymentsApiApiKeys, PaymentSettleRequest, Chain } from '@bleumi/pay-sdk';
 
 // Instantiate client
 const bleumiPay = new PaymentsApi();
@@ -197,13 +202,11 @@ async function settleWallet(id: string) {
     try {
         bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); // string | Replace <YOUR_API_KEY> with your actual API key
 
-        const token = new Token('<TOKEN>'); // string | Replace <TOKEN> with ETH or XDAI or ECR-20 token contract address or XDAIT
-
         const paymentSettleRequest = new PaymentSettleRequest();
         paymentSettleRequest.amount = '<AMT>'; // string | Replace <AMT> with settle amount
-        paymentSettleRequest.token = token;
+        paymentSettleRequest.token = '<TOKEN>'; // string | Replace <TOKEN> with "ALGO" or "ETH" or "XDAI" or "XDAIT" or ERC-20 Token Contract Address or Algorand Standard Asset token
 
-        const chain = Chain.Ropsten;
+        const chain = Chain.Goerli;
         const response = await bleumiPay.settlePayment(id, paymentSettleRequest, chain);
         const paymentSettleResponse = response.body;
         console.log(JSON.stringify(paymentSettleResponse));
@@ -220,7 +223,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**PaymentSettleRequest**](PaymentSettleRequest.md)| Request body - used to specify the amount to settle. |
  **id** | **String**| Unique ID identifying this record in your system |
- **chain** | [**Chain**](Chain.md)| Ethereum network in which payment is to be created. |
+ **chain** | [**Chain**](Chain.md)| Network in which payment was created. |
 
 ### Return type
 
@@ -252,7 +255,7 @@ This method refunds the balance of a token for a given payment to the buyerAddre
 ### Example
 ```javascript
 
-import { PaymentsApi, PaymentsApiApiKeys, WalletRefundOperationInput,  EthAddress } from '@bleumi/pay-sdk';
+import { PaymentsApi, PaymentsApiApiKeys, PaymentRefundRequest, Chain } from '@bleumi/pay-sdk';
 
 // Instantiate client
 const bleumiPay = new PaymentsApi();
@@ -261,11 +264,10 @@ async function refundWallet(id: string) {
     try {
         bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
 
-        const token = new Token('<TOKEN>'); // string | The ECR-20 token to refund | Replace <TOKEN> with ETH or XDAI or ECR-20 token contract address or XDAIT
         const paymentRefundRequest = new PaymentRefundRequest();
-        paymentRefundRequest.token = token;
+        paymentRefundRequest.token = '<TOKEN>'; // string | Replace <TOKEN> with "ALGO" or "ETH" or "XDAI" or "XDAIT" or ERC-20 Token Contract Address or Algorand Standard Asset token
 
-        const chain = Chain.Ropsten;
+        const chain = Chain.Goerli;
         const response = await bleumiPay.refundWallet(id, paymentRefundRequest, chain);
         const paymentOperationResponse = response.body;
         console.log(JSON.stringify(paymentOperationResponse));
@@ -282,7 +284,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**PaymentRefundRequest**](PaymentRefundRequest.md)| Request body - used to specify the token to refund. |
  **id** | **String**| Unique ID identifying this record in your system |
- **chain** | [**Chain**](Chain.md)| Ethereum network in which payment is to be created. | 
+ **chain** | [**Chain**](Chain.md)| Network in which payment was created. | 
 
 ### Return type
 

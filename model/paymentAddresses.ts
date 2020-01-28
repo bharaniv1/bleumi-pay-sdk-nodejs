@@ -17,6 +17,7 @@ import { WalletAddress } from './walletAddress';
 */
 export class PaymentAddresses {
     'ethereum'?: { [key: string]: WalletAddress; };
+    'algorand'?: { [key: string]: WalletAddress; };
 
     static discriminator: string | undefined = undefined;
 
@@ -24,6 +25,11 @@ export class PaymentAddresses {
         {
             "name": "ethereum",
             "baseName": "ethereum",
+            "type": "{ [key: string]: WalletAddress; }"
+        },
+        {
+            "name": "algorand",
+            "baseName": "algorand",
             "type": "{ [key: string]: WalletAddress; }"
         }    ];
 

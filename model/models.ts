@@ -1,3 +1,4 @@
+export * from './algorandBalance';
 export * from './badRequest';
 export * from './chain';
 export * from './checkoutToken';
@@ -7,8 +8,7 @@ export * from './createPaymentRequest';
 export * from './createPaymentResponse';
 export * from './createPayoutRequest';
 export * from './createPayoutResponse';
-export * from './ethAddress';
-export * from './networkBalance';
+export * from './ethereumBalance';
 export * from './paginatedPaymentOperations';
 export * from './paginatedPayments';
 export * from './paginatedPayoutItems';
@@ -23,7 +23,6 @@ export * from './paymentSettleRequest';
 export * from './payout';
 export * from './payoutItem';
 export * from './payoutItemInputs';
-export * from './token';
 export * from './validateCheckoutRequest';
 export * from './validateCheckoutResponse';
 export * from './walletAddress';
@@ -31,6 +30,7 @@ export * from './walletBalance';
 
 import localVarRequest = require('request');
 
+import { AlgorandBalance } from './algorandBalance';
 import { BadRequest } from './badRequest';
 import { Chain } from './chain';
 import { CheckoutToken } from './checkoutToken';
@@ -40,8 +40,7 @@ import { CreatePaymentRequest } from './createPaymentRequest';
 import { CreatePaymentResponse } from './createPaymentResponse';
 import { CreatePayoutRequest } from './createPayoutRequest';
 import { CreatePayoutResponse } from './createPayoutResponse';
-import { EthAddress } from './ethAddress';
-import { NetworkBalance } from './networkBalance';
+import { EthereumBalance } from './ethereumBalance';
 import { PaginatedPaymentOperations } from './paginatedPaymentOperations';
 import { PaginatedPayments } from './paginatedPayments';
 import { PaginatedPayoutItems } from './paginatedPayoutItems';
@@ -56,7 +55,6 @@ import { PaymentSettleRequest } from './paymentSettleRequest';
 import { Payout } from './payout';
 import { PayoutItem } from './payoutItem';
 import { PayoutItemInputs } from './payoutItemInputs';
-import { Token } from './token';
 import { ValidateCheckoutRequest } from './validateCheckoutRequest';
 import { ValidateCheckoutResponse } from './validateCheckoutResponse';
 import { WalletAddress } from './walletAddress';
@@ -79,6 +77,7 @@ let enumsMap: {[index: string]: any} = {
 }
 
 let typeMap: {[index: string]: any} = {
+    "AlgorandBalance": AlgorandBalance,
     "BadRequest": BadRequest,
     "CheckoutToken": CheckoutToken,
     "CreateCheckoutUrlRequest": CreateCheckoutUrlRequest,
@@ -87,8 +86,7 @@ let typeMap: {[index: string]: any} = {
     "CreatePaymentResponse": CreatePaymentResponse,
     "CreatePayoutRequest": CreatePayoutRequest,
     "CreatePayoutResponse": CreatePayoutResponse,
-    "EthAddress": EthAddress,
-    "NetworkBalance": NetworkBalance,
+    "EthereumBalance": EthereumBalance,
     "PaginatedPaymentOperations": PaginatedPaymentOperations,
     "PaginatedPayments": PaginatedPayments,
     "PaginatedPayoutItems": PaginatedPayoutItems,
@@ -103,7 +101,6 @@ let typeMap: {[index: string]: any} = {
     "Payout": Payout,
     "PayoutItem": PayoutItem,
     "PayoutItemInputs": PayoutItemInputs,
-    "Token": Token,
     "ValidateCheckoutRequest": ValidateCheckoutRequest,
     "ValidateCheckoutResponse": ValidateCheckoutResponse,
     "WalletAddress": WalletAddress,
@@ -162,8 +159,6 @@ export class ObjectSerializer {
             return transformedData;
         } else if (type === "Date") {
             return data.toISOString();
-        } else if (type === "EthAddress"||type === "Token") {
-            return data.addr;
         } else {
             if (enumsMap[type]) {
                 return data;
@@ -204,10 +199,6 @@ export class ObjectSerializer {
             return transformedData;
         } else if (type === "Date") {
             return new Date(data);
-        } else if (type === "EthAddress") {
-            return new EthAddress(data);
-        } else if (type === "Token") {
-            return new Token(data);
         } else {
             if (enumsMap[type]) {// is Enum
                 return data;

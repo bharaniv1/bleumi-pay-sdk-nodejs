@@ -5,9 +5,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **addr** | **string** | Address of the wallet | 
 **amount** | **string** | Amount (Only for settle operation) | 
-**token** | **string** | <b>ETH</b> - for Ethereum  <br/> <b>XDAI</b> - for xDai <br/> <b>XDAIT</b> - for xDai Testnet <br/> <b> &lt;contract address of ERC-20 token&gt;</b> - for ERC-20 Tokens  | 
+**token** | **string** | <b>ETH</b> - for Ethereum  <br/>  <b>XDAI</b> - for xDai <br/>  <b>XDAIT</b> - for xDai Testnet <br/>  <b>ALGO</b> - for Algo <br/>  <b>&lt;asset id&gt;</b> - for Algorand Standard Asset <br/>  <b> &lt;contract address of ERC-20 token&gt;</b> - for ERC-20; Please refer to Please refer to [ERC-20 Tokens](https://pay.bleumi.com/docs/#erc-20) for contract address;  |  
 **tokenAmount** | **string** | Token amount to be settled in network format (Only for settle operation) | 
-**tokenDecimals** | **string** | Token decimal places (Only for settle operation) | 
+**tokenDecimals** | **number** | Token decimal places (Only for settle operation) | 
 
 
 ## Settle Operation Example

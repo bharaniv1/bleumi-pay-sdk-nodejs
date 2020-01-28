@@ -1,6 +1,6 @@
 /**
- * Bleumi Pay API
- * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application
+ * Bleumi Pay REST API
+ * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai, Algorand payments and/or payouts into your business or application
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: info@bleumi.com
@@ -30,6 +30,7 @@ import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../mode
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
 import { HttpError, RequestFile } from './apis';
+import { RequestValidator } from './requestValidator';
 
 let defaultBasePath = 'https://api.pay.bleumi.com/';
 
@@ -94,7 +95,7 @@ export class PaymentsApi {
      * 
      * @summary Generate a unique wallet address in the specified network to accept payment
      * @param createPaymentRequest 
-     * @param chain Ethereum network in which payment is to be created. Please refer documentation for Supported Networks
+     * @param chain Network in which payment is to be created. Please refer documentation for Supported Networks
      */
     public async createPayment (createPaymentRequest: CreatePaymentRequest, chain?: Chain, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: CreatePaymentResponse;  }> {
         const localVarPath = this.basePath + '/v1/payment';
@@ -116,6 +117,11 @@ export class PaymentsApi {
 
         if (chain !== undefined) {
             localVarQueryParameters['chain'] = ObjectSerializer.serialize(chain, "Chain");
+        }
+
+        var msg = RequestValidator.ValidateCreatePayment(createPaymentRequest, chain);
+        if (!RequestValidator.isEmpty(msg)) {
+            throw new Error(msg);
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -169,7 +175,7 @@ export class PaymentsApi {
     /**
      * 
      * @summary Retrieve the wallet addresses & token balances for a given payment
-     * @param id Unique identifier of the payment (specified during [Create a Payment](#createPayment)) to retrieve
+     * @param id Unique identifier of the payment (specified during createPayment) to retrieve
      */
     public async getPayment (id: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Payment;  }> {
         const localVarPath = this.basePath + '/v1/payment/{id}'
@@ -396,10 +402,11 @@ export class PaymentsApi {
      * @summary Retrieve all payments created.
      * @param nextToken Cursor to start results from
      * @param sortBy Sort payments by
+     * @param sortOrder Sort Order
      * @param startAt Get payments from this timestamp (unix)
      * @param endAt Get payments till this timestamp (unix)
      */
-    public async listPayments (nextToken?: string, sortBy?: 'createdAt' | 'updatedAt', startAt?: string, endAt?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PaginatedPayments;  }> {
+    public async listPayments (nextToken?: string, sortBy?: 'createdAt' | 'updatedAt', sortOrder?: 'ascending' | 'descending', startAt?: string, endAt?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PaginatedPayments;  }> {
         const localVarPath = this.basePath + '/v1/payment';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -418,6 +425,10 @@ export class PaymentsApi {
 
         if (sortBy !== undefined) {
             localVarQueryParameters['sortBy'] = ObjectSerializer.serialize(sortBy, "'createdAt' | 'updatedAt'");
+        }
+
+        if (sortOrder !== undefined) {
+            localVarQueryParameters['sortOrder'] = ObjectSerializer.serialize(sortOrder, "'ascending' | 'descending'");
         }
 
         if (startAt !== undefined) {
@@ -478,9 +489,9 @@ export class PaymentsApi {
     /**
      * 
      * @summary Refund the balance of a token for a given payment to the buyerAddress
-     * @param id Unique identifier of the payment (specified during [Create a Payment](#createPayment))
+     * @param id Unique identifier of the payment (specified during createPayment)
      * @param paymentRefundRequest Request body - used to specify the token to refund.
-     * @param chain Ethereum network in which payment is to be created.
+     * @param chain Ethereum network in which payment is to be refunded.
      */
     public async refundPayment (id: string, paymentRefundRequest: PaymentRefundRequest, chain?: Chain, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PaymentOperationResponse;  }> {
         const localVarPath = this.basePath + '/v1/payment/{id}/refund'
@@ -508,6 +519,11 @@ export class PaymentsApi {
 
         if (chain !== undefined) {
             localVarQueryParameters['chain'] = ObjectSerializer.serialize(chain, "Chain");
+        }
+
+        var msg = RequestValidator.ValidateRefundPayment(paymentRefundRequest, chain);
+        if (!RequestValidator.isEmpty(msg)) {
+            throw new Error(msg);
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -561,9 +577,9 @@ export class PaymentsApi {
     /**
      * 
      * @summary Settle a specific amount of a token for a given payment to the transferAddress and remaining balance (if any) will be refunded to the buyerAddress
-     * @param id Unique identifier of the payment (specified during [Create a Payment](#createPayment))
+     * @param id Unique identifier of the payment (specified during createPayment)
      * @param paymentSettleRequest Request body - used to specify the amount to settle.
-     * @param chain Ethereum network in which payment is to be created.
+     * @param chain Ethereum network in which payment is to be settled.
      */
     public async settlePayment (id: string, paymentSettleRequest: PaymentSettleRequest, chain?: Chain, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PaymentOperationResponse;  }> {
         const localVarPath = this.basePath + '/v1/payment/{id}/settle'
@@ -591,6 +607,11 @@ export class PaymentsApi {
 
         if (chain !== undefined) {
             localVarQueryParameters['chain'] = ObjectSerializer.serialize(chain, "Chain");
+        }
+
+        var msg = RequestValidator.ValidateSettlePayment(paymentSettleRequest, chain);
+        if (!RequestValidator.isEmpty(msg)) {
+            throw new Error(msg);
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

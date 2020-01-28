@@ -1,6 +1,6 @@
 /**
- * Bleumi Pay API
- * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application
+ * Bleumi Pay REST API
+ * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai, Algorand payments and/or payouts into your business or application
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: info@bleumi.com
@@ -10,15 +10,24 @@
  * Do not edit the class manually.
  */
 
-import { EthAddress } from './ethAddress';
 
 export class CreatePaymentRequest {
     /**
     * Unique ID identifying the payment
     */
     'id': string;
-    'buyerAddress': EthAddress;
-    'transferAddress': EthAddress;
+    /**
+    * (Only for Algorand Standard Asset) Asset id which will be used for payment.
+    */
+    'token'?: string;
+    /**
+    * Address of buyer. Refund operations on this payment will use this address. You can set this to your address to manually handle refunds (outside of Bleumi Pay) to your buyer. This address must be able to receive payments from smart contracts.
+    */
+    'buyerAddress': string;
+    /**
+    * Your deposit address. Settle operations on this payment will use this address. This address must be able to receive payments from smart contracts.
+    */
+    'transferAddress': string;
 
     static discriminator: string | undefined = undefined;
 
@@ -29,14 +38,19 @@ export class CreatePaymentRequest {
             "type": "string"
         },
         {
+            "name": "token",
+            "baseName": "token",
+            "type": "string"
+        },
+        {
             "name": "buyerAddress",
             "baseName": "buyerAddress",
-            "type": "EthAddress"
+            "type": "string"
         },
         {
             "name": "transferAddress",
             "baseName": "transferAddress",
-            "type": "EthAddress"
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {

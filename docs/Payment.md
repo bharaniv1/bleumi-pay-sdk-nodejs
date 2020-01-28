@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 **id** | **string** | Unique ID identifying the payment; specified when it was created by your system | 
 **addresses** | [**PaymentAddresses**](PaymentAddresses.md) | A dictionary which gives the address of the wallet generated for each network | 
 **balances** | [**PaymentBalances**](PaymentBalances.md) | A dictionary which gives the token balances in each network | 
-**createdAt** | **Long** | UNIX timestamp when the payment was created | 
-**updatedAt** | **Long** | UNIX timestamp when the lastest operation was performed | 
+**createdAt** | **number** | UNIX timestamp when the payment was created | 
+**updatedAt** | **number** | UNIX timestamp when the lastest operation was performed | 
 
 
 ## Example

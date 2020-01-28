@@ -1,6 +1,6 @@
 /**
- * Bleumi Pay API
- * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application
+ * Bleumi Pay REST API
+ * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai, Algorand payments and/or payouts into your business or application
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: info@bleumi.com
@@ -11,8 +11,6 @@
  */
 
 import { Chain } from './chain';
-import { EthAddress } from './ethAddress';
-import { Token } from './token';
 
 export class CreateCheckoutUrlRequest {
     /**
@@ -35,9 +33,19 @@ export class CreateCheckoutUrlRequest {
     * Buyer will be redirected to this URL upon successfully completing the payment.
     */
     'successUrl': string;
-    'buyerAddress'?: EthAddress;
+    /**
+    * Address of buyer. Refund operations on this payment will use this address. You can set this to your address to manually handle refunds (outside of Bleumi Pay) to your buyer. This address must be able to receive payments from smart contracts.
+    */
+    'buyerAddress'?: string;
     'chain'?: Chain;
-    'token'?: Token;
+    /**
+    * ETH - for Ethereum ; XDAI - for xDai ; XDAIT - for xDai Testnet ; ALGO - Algo; <asset id> - for Algorand Standard Asset; <contract address of ERC-20 token> - for ERC-20 Tokens;
+    */
+    'token'?: string;
+    /**
+    * Base64 encode hmac_input GET parameter passed to the successUrl
+    */
+    'base64Transform'?: boolean;
 
     static discriminator: string | undefined = undefined;
 
@@ -70,7 +78,7 @@ export class CreateCheckoutUrlRequest {
         {
             "name": "buyerAddress",
             "baseName": "buyerAddress",
-            "type": "EthAddress"
+            "type": "string"
         },
         {
             "name": "chain",
@@ -80,7 +88,12 @@ export class CreateCheckoutUrlRequest {
         {
             "name": "token",
             "baseName": "token",
-            "type": "Token"
+            "type": "string"
+        },
+        {
+            "name": "base64Transform",
+            "baseName": "base64Transform",
+            "type": "boolean"
         }    ];
 
     static getAttributeTypeMap() {

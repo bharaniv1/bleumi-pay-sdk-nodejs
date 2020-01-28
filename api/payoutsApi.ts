@@ -1,6 +1,6 @@
 /**
- * Bleumi Pay API
- * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application
+ * Bleumi Pay REST API
+ * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai, Algorand payments and/or payouts into your business or application
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: info@bleumi.com
@@ -24,6 +24,7 @@ import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../mode
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
 import { HttpError, RequestFile } from './apis';
+import { RequestValidator } from './requestValidator';
 
 let defaultBasePath = 'https://api.pay.bleumi.com/';
 
@@ -110,6 +111,11 @@ export class PayoutsApi {
 
         if (chain !== undefined) {
             localVarQueryParameters['chain'] = ObjectSerializer.serialize(chain, "Chain");
+        }
+
+        var msg = RequestValidator.ValidateCreatePayout(createPayoutRequest, chain);
+        if (!RequestValidator.isEmpty(msg)) {
+            throw new Error(msg);
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

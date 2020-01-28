@@ -10,32 +10,28 @@
  * Do not edit the class manually.
  */
 
-import { AlgorandBalance } from './algorandBalance';
-import { EthereumBalance } from './ethereumBalance';
+import { WalletBalance } from './walletBalance';
 
-/**
-* Payment Balances
-*/
-export class PaymentBalances {
-    'ethereum'?: EthereumBalance;
-    'algorand'?: AlgorandBalance;
+export class AlgorandBalance {
+    'algMainnet'?: { [key: string]: WalletBalance; };
+    'algTestnet'?: { [key: string]: WalletBalance; };
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "ethereum",
-            "baseName": "ethereum",
-            "type": "EthereumBalance"
+            "name": "algMainnet",
+            "baseName": "alg_mainnet",
+            "type": "{ [key: string]: WalletBalance; }"
         },
         {
-            "name": "algorand",
-            "baseName": "algorand",
-            "type": "AlgorandBalance"
+            "name": "algTestnet",
+            "baseName": "alg_testnet",
+            "type": "{ [key: string]: WalletBalance; }"
         }    ];
 
     static getAttributeTypeMap() {
-        return PaymentBalances.attributeTypeMap;
+        return AlgorandBalance.attributeTypeMap;
     }
 }
 

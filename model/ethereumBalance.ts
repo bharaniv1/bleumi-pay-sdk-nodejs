@@ -1,6 +1,6 @@
 /**
- * Bleumi Pay API
- * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application
+ * Bleumi Pay REST API
+ * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai, Algorand payments and/or payouts into your business or application
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: info@bleumi.com
@@ -12,13 +12,10 @@
 
 import { WalletBalance } from './walletBalance';
 
-export class NetworkBalance {
+export class EthereumBalance {
     'mainnet'?: { [key: string]: WalletBalance; };
-    'xdai'?: { [key: string]: WalletBalance; };
     'goerli'?: { [key: string]: WalletBalance; };
-    'kovan'?: { [key: string]: WalletBalance; };
-    'rinkeby'?: { [key: string]: WalletBalance; };
-    'ropsten'?: { [key: string]: WalletBalance; };
+    'xdai'?: { [key: string]: WalletBalance; };
     'xdaiTestnet'?: { [key: string]: WalletBalance; };
 
     static discriminator: string | undefined = undefined;
@@ -30,28 +27,13 @@ export class NetworkBalance {
             "type": "{ [key: string]: WalletBalance; }"
         },
         {
-            "name": "xdai",
-            "baseName": "xdai",
-            "type": "{ [key: string]: WalletBalance; }"
-        },
-        {
             "name": "goerli",
             "baseName": "goerli",
             "type": "{ [key: string]: WalletBalance; }"
         },
         {
-            "name": "kovan",
-            "baseName": "kovan",
-            "type": "{ [key: string]: WalletBalance; }"
-        },
-        {
-            "name": "rinkeby",
-            "baseName": "rinkeby",
-            "type": "{ [key: string]: WalletBalance; }"
-        },
-        {
-            "name": "ropsten",
-            "baseName": "ropsten",
+            "name": "xdai",
+            "baseName": "xdai",
             "type": "{ [key: string]: WalletBalance; }"
         },
         {
@@ -61,7 +43,7 @@ export class NetworkBalance {
         }    ];
 
     static getAttributeTypeMap() {
-        return NetworkBalance.attributeTypeMap;
+        return EthereumBalance.attributeTypeMap;
     }
 }
 

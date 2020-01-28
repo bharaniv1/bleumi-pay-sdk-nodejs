@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 **txid** | **string** | Unique identifier for this payout | 
 **status** | **boolean** | <b>null</b> - Operation in progress </br> <b>true</b> - Operation confirmed by network </br> <b>false</b> - Operation rejected by network </br> | 
 **hash** | **string** | Transaction hash of the operation submitted to the network. This field is blank when the operation is in progress. | 
-**createdAt** | **long** | UNIX timestamp when the payout was created | 
-**updatedAt** | **long** | UNIX timestamp when the lastest operation was performed | 
+**createdAt** | **number** | UNIX timestamp when the payout was created | 
+**updatedAt** | **number** | UNIX timestamp when the lastest operation was performed | 
 **inputs** | [**PayoutItemInputs**](PayoutItemInputs.md) | Inputs provided for this payout creation | 
 
 

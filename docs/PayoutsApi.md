@@ -1,6 +1,6 @@
 # PayoutsApi
 
-Payouts are available only for the Ethereum network today and require you to set up a Private Payment Processor and link it to your account. Please contact support@bleumi.com if you want to enable payouts for your account.
+Payouts are available only for the Ethereum and xDAI networks today and require you to set up a Private Payment Processor and link it to your account. Please contact support@bleumi.com if you want to enable payouts for your account.
 
 <a name="createPayout"></a>
 # **createPayout**
@@ -24,7 +24,7 @@ async function createPayoutRequest(id: string) {
 
 		const createPayoutRequest = new CreatePayoutRequest();
         payoutRcreatePayoutRequesteq.txid = id; // string | Replace with unique payout ID 
-        createPayoutRequest.token = new Token("<TOKEN>"); // string | Replace <TOKEN> with Token. Eg. ETH or ECR-20 token contract address or XDAI or XDAIT
+        createPayoutRequest.token = "<TOKEN>"; // string | Optional | Replace <TOKEN> with "ALGO" or "ETH" or "XDAI" or "XDAIT" or ERC-20 'Token Contract Address' or 'Algorand Standard Asset token'
 		
 		createPayoutRequest.payouts = [
             {
@@ -37,13 +37,16 @@ async function createPayoutRequest(id: string) {
             }
         ]
 
-        const chain = Chain.Ropsten; // Specify the chain for payout creation
+        const chain = Chain.Goerli; // Specify the chain for payout creation
         const response = await bleumiPay.createPayout(createPayoutRequest, chain);
         const createPayoutResponse = response.body;
         console.log(JSON.stringify(createPayoutResponse));
     } catch (err) {
-        console.error('Error statusCode:', err.response.statusCode);
-        console.error('Error reponse:', err.response.body);
+        if (err.response) {
+            console.error('Error statusCode:', err.response.statusCode);
+            console.error('Error reponse:', err.response.body);
+        } 
+        console.log('Error message:',err.message);
     }
 }
 ```
@@ -104,7 +107,7 @@ async function listPayouts() {
         const nextToken = ""; // string | Cursor to start results from
         const sortBy = "<SORT_BY>"; // string | Sort payouts by | Eg. "createdAt"
         const startAt = "<START_TIMESTAMP>"; // string | Get payouts from this timestamp | Eg. 1546300800 for 1-JAN-2019
-        const endAt = ""; // string | Get payouts till this timestamp
+        const endAt = undefined; // string | Get payouts till this timestamp
         bleumiPay.setApiKey(PayoutsApiApiKeys.ApiKeyAuth, apikey.dev)
         const response = await bleumiPay.listPayouts(nextToken, sortBy, startAt, endAt);
         const paginatedPayouts = response.body;

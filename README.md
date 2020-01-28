@@ -5,7 +5,7 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/bleumi/bleumi-pay-sdk-nodejs/master/LICENSE)
 
-The Bleumi Pay SDK is a one-stop shop to help you integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application. The SDK bundles [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction) into one SDK to ease implementation and support.
+The Bleumi Pay SDK is a one-stop shop to help you integrate Algorand, Ethereum, ERC-20 and xDai payments and/or payouts into your business or application. The SDK bundles [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction) into one SDK to ease implementation and support.
 
 **bleumi-pay-sdk-nodejs** is a TypeScrpit-NodeJS library that provides an interface between your NodeJS application and [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction). This tutorial covers the basics, including examples, needed to use the SDK.
 
@@ -56,15 +56,13 @@ const bleumiPay = new PaymentsApi();
 async function createPayment(id: string) {
     try {
         bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
-        const buyer = new EthAddress('<BUYER_ADDR>'); // Replace <BUYER_ADDR> with the Buyer's Enthereum Network Address
-        const merchant = new EthAddress('<MERCHANT_ADDR>'); // Replace <MERCHANT_ADDR> with the Merchant's Enthereum Network Address
 
         const createPaymentRequest = new CreatePaymentRequest();
         createPaymentRequest.id = id;
-        createPaymentRequest.buyerAddress = buyer;
-        createPaymentRequest.transferAddress = merchant;
+        createPaymentRequest.buyerAddress = '<BUYER_ADDR>'; // Replace <BUYER_ADDR> with the Buyer's  Network Address
+        createPaymentRequest.transferAddress = '<MERCHANT_ADDR>'; // Replace <MERCHANT_ADDR> with the Merchant's Network Address
 
-        const chain = Chain.Ropsten; // Specify the chain for payment creation
+        const chain = NETWORK; // Replace NETWORK with the chain for payment creation Eg. Chain.Goerli
         const response = await bleumiPay.createPayment(createPaymentRequest, chain);
         const createPaymentResponse = response.body;
         console.log(JSON.stringify(createPaymentResponse));
@@ -83,50 +81,50 @@ More examples can be found under each method in [SDK Classes](README.md#sdk-clas
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-PaymentsApi | [**createPayment**](docs/Api/PaymentsApi.md#createPayment) | **POST** /v1/payment | Generate a unique wallet address in the specified network to accept payment
-PaymentsApi | [**getPayment**](docs/Api/PaymentsApi.md#getPayment) | **GET** /v1/payment/{id} | Retrieve the wallet addresses &amp; token balances for a given payment
+PaymentsApi | [**createPayment**](docs/PaymentsApi.md#createPayment) | **POST** /v1/payment | Generate a unique wallet address in the specified network to accept payment
+PaymentsApi | [**getPayment**](docs/PaymentsApi.md#getPayment) | **GET** /v1/payment/{id} | Retrieve the wallet addresses &amp; token balances for a given payment
 PaymentsApi | [**listPayments**](docs/PaymentsApi.md#listPayments) | **GET** /v1/payment | Retrieve all payments created.
-PaymentsApi | [**settlePayment**](docs/Api/PaymentsApi.md#settlePayment) | **POST** /v1/payment/{id}/settle | Settle a specific amount of a token for a given payment to the transferAddress and remaining balance (if any) will be refunded to the buyerAddress
-PaymentsApi | [**refundPayment**](docs/Api/PaymentsApi.md#refundPayment) | **POST** /v1/payment/{id}/refund | Refund the balance of a token for a given payment to the buyerAddress
-PaymentsApi | [**getPaymentOperation**](docs/Api/PaymentsApi.md#getPaymentOperation) | **GET** /v1/payment/{id}/operation/{txid} | Retrieve a payment operation for a specific payment.
-PaymentsApi | [**listPaymentOperations**](docs/Api/PaymentsApi.md#listPaymentOperations) | **GET** /v1/payment/{id}/operation | Retrieve all payment operations for a specific payment.
-HostedCheckoutsApi | [**createCheckoutUrl**](docs/Api/HostedCheckoutsApi.md#createCheckoutUrl) | **POST** /v1/payment/hc | Generate a unique checkout URL to accept payment.
-HostedCheckoutsApi | [**listTokens**](docs/Api/HostedCheckoutsApi.md#listTokens) | **GET** /v1/payment/hc/tokens | Retrieve all tokens configured for the Hosted Checkout in your account in the [Bleumi Pay Dashboard](https://pay.bleumi.com/app/).
-HostedCheckoutsApi | [**validateCheckoutPayment**](docs/Api/HostedCheckoutsApi.md#validateCheckoutPayment) | **POST** /v1/payment/hc/validate | Validate the GET parameters passed by Hosted Checkout in successUrl upon successfully completing payment.
-PayoutsApi | [**createPayout**](docs/Api/PayoutsApi.md#createPayout) | **POST** /v1/payout | Create a payout.
-PayoutsApi | [**listPayouts**](docs/Api/PayoutsApi.md#listPayouts) | **GET** /v1/payout | Returns a list of payouts
+PaymentsApi | [**settlePayment**](docs/PaymentsApi.md#settlePayment) | **POST** /v1/payment/{id}/settle | Settle a specific amount of a token for a given payment to the transferAddress and remaining balance (if any) will be refunded to the buyerAddress
+PaymentsApi | [**refundPayment**](docs/PaymentsApi.md#refundPayment) | **POST** /v1/payment/{id}/refund | Refund the balance of a token for a given payment to the buyerAddress
+PaymentsApi | [**getPaymentOperation**](docs/PaymentsApi.md#getPaymentOperation) | **GET** /v1/payment/{id}/operation/{txid} | Retrieve a payment operation for a specific payment.
+PaymentsApi | [**listPaymentOperations**](docs/PaymentsApi.md#listPaymentOperations) | **GET** /v1/payment/{id}/operation | Retrieve all payment operations for a specific payment.
+HostedCheckoutsApi | [**createCheckoutUrl**](docs/HostedCheckoutsApi.md#createCheckoutUrl) | **POST** /v1/payment/hc | Generate a unique checkout URL to accept payment.
+HostedCheckoutsApi | [**listTokens**](docs/HostedCheckoutsApi.md#listTokens) | **GET** /v1/payment/hc/tokens | Retrieve all tokens configured for the Hosted Checkout in your account in the [Bleumi Pay Dashboard](https://pay.bleumi.com/app/).
+HostedCheckoutsApi | [**validateCheckoutPayment**](docs/HostedCheckoutsApi.md#validateCheckoutPayment) | **POST** /v1/payment/hc/validate | Validate the GET parameters passed by Hosted Checkout in successUrl upon successfully completing payment.
+PayoutsApi | [**createPayout**](docs/PayoutsApi.md#createPayout) | **POST** /v1/payout | Create a payout.
+PayoutsApi | [**listPayouts**](docs/PayoutsApi.md#listPayouts) | **GET** /v1/payout | Returns a list of payouts
 
 ## Documentation For Models
 
- - [BadRequest](docs/Model/BadRequest.md)
- - [Chain](docs/Model/Chain.md)
- - [CheckoutToken](docs/Model/CheckoutToken.md)
- - [CreateCheckoutUrlRequest](docs/Model/CreateCheckoutUrlRequest.md)
- - [CreateCheckoutUrlResponse](docs/Model/CreateCheckoutUrlResponse.md)
- - [CreatePaymentRequest](docs/Model/CreatePaymentRequest.md)
- - [CreatePaymentResponse](docs/Model/CreatePaymentResponse.md)
- - [CreatePayoutRequest](docs/Model/CreatePayoutRequest.md)
- - [CreatePayoutResponse](docs/Model/CreatePayoutResponse.md)
- - [EthAddress](docs/Model/EthAddress.md)
- - [PaginatedPaymentOperations](docs/Model/PaginatedPaymentOperations.md)
- - [PaginatedPayments](docs/Model/PaginatedPayments.md)
- - [PaginatedPayoutItems](docs/Model/PaginatedPayoutItems.md)
- - [Payment](docs/Model/Payment.md)
- - [PaymentAddresses](docs/Model/PaymentAddresses.md)
- - [PaymentBalances](docs/Model/PaymentBalances.md)
- - [PaymentOperation](docs/Model/PaymentOperation.md)
- - [PaymentOperationInputs](docs/Model/PaymentOperationInputs.md)
- - [PaymentOperationResponse](docs/Model/PaymentOperationResponse.md)
- - [PaymentRefundRequest](docs/Model/PaymentRefundRequest.md)
- - [PaymentSettleRequest](docs/Model/PaymentSettleRequest.md)
- - [Payout](docs/Model/Payout.md)
- - [PayoutItem](docs/Model/PayoutItem.md)
- - [PayoutItemInputs](docs/Model/PayoutItemInputs.md)
- - [Token](docs/Model/Token.md)
- - [ValidateCheckoutRequest](docs/Model/ValidateCheckoutRequest.md)
- - [ValidateCheckoutResponse](docs/Model/ValidateCheckoutResponse.md)
- - [WalletAddress](docs/Model/WalletAddress.md)
- - [WalletBalance](docs/Model/WalletBalance.md)
+ - [AlgorandBalance](docs/AlgorandBalance.md)
+ - [BadRequest](docs/BadRequest.md)
+ - [Chain](docs/Chain.md)
+ - [CheckoutToken](docs/CheckoutToken.md)
+ - [CreateCheckoutUrlRequest](docs/CreateCheckoutUrlRequest.md)
+ - [CreateCheckoutUrlResponse](docs/CreateCheckoutUrlResponse.md)
+ - [CreatePaymentRequest](docs/CreatePaymentRequest.md)
+ - [CreatePaymentResponse](docs/CreatePaymentResponse.md)
+ - [CreatePayoutRequest](docs/CreatePayoutRequest.md)
+ - [CreatePayoutResponse](docs/CreatePayoutResponse.md)
+ - [EthereumBalance](docs/EthereumBalance.md)
+ - [PaginatedPaymentOperations](docs/PaginatedPaymentOperations.md)
+ - [PaginatedPayments](docs/PaginatedPayments.md)
+ - [PaginatedPayoutItems](docs/PaginatedPayoutItems.md)
+ - [Payment](docs/Payment.md)
+ - [PaymentAddresses](docs/PaymentAddresses.md)
+ - [PaymentBalances](docs/PaymentBalances.md)
+ - [PaymentOperation](docs/PaymentOperation.md)
+ - [PaymentOperationInputs](docs/PaymentOperationInputs.md)
+ - [PaymentOperationResponse](docs/PaymentOperationResponse.md)
+ - [PaymentRefundRequest](docs/PaymentRefundRequest.md)
+ - [PaymentSettleRequest](docs/PaymentSettleRequest.md)
+ - [Payout](docs/Payout.md)
+ - [PayoutItem](docs/PayoutItem.md)
+ - [PayoutItemInputs](docs/PayoutItemInputs.md)
+ - [ValidateCheckoutRequest](docs/ValidateCheckoutRequest.md)
+ - [ValidateCheckoutResponse](docs/ValidateCheckoutResponse.md)
+ - [WalletAddress](docs/WalletAddress.md)
+ - [WalletBalance](docs/WalletBalance.md)
 
 ## Limitations
 

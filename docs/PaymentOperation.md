@@ -5,8 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **txid** | **string** | Transaction ID of the operation |  [optional]
 **chain** | **string** | Network in which the operation was carried out  | 
-**funcName** | **string** |  Name of the function invoked on the [Payment Processor](https://pay.bleumi.com/docs/#payment-processor).<br/><br/>Functions available:<br/> - createAndSettleWallet<br/> - createAndRefundWallet
-status | boolean | <b>null</b> - Operation in progress<br/><b>true</b> - Operation confirmed by network<br/><b>false</b> - Operation rejected by network
+**funcName** | **string** |   Name of the function invoked on the Payment Processor.<br/><br/>Functions available:<br/> - createAndSettleWallet<br/> - createAndRefundWallet
 **status** | **boolean** | <b>null</b> - operation in progress <br/> <b>true</b> - operation completed successfuly <br/> <b>false</b> - operation failed to process | 
 **inputs** | [**PaymentOperationInputs**](PaymentOperationInputs.md) | The inputs provided during this operation creation | 
 **hash** | **string** | Transaction hash of operation submitted to the network. This field is blank when operation is in progress. | 
@@ -16,7 +15,7 @@ status | boolean | <b>null</b> - Operation in progress<br/><b>true</b> - Operati
 ```json
 {
       "txid": "1574828863297",
-      "chain": "ropsten",
+      "chain": "goerli",
       "funcName": "createAndSettleWallet",
       "inputs": {
         "addr": "0xbec374e0acb4b7b6fde45b11287e61beb108e868",

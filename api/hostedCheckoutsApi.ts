@@ -1,6 +1,6 @@
 /**
- * Bleumi Pay API
- * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application
+ * Bleumi Pay REST API
+ * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai, Algorand payments and/or payouts into your business or application
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: info@bleumi.com
@@ -25,6 +25,7 @@ import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../mode
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
 import { HttpError, RequestFile } from './apis';
+import { RequestValidator } from './requestValidator';
 
 let defaultBasePath = 'https://api.pay.bleumi.com/';
 
@@ -108,6 +109,11 @@ export class HostedCheckoutsApi {
             throw new Error('Required parameter createCheckoutUrlRequest was null or undefined when calling createCheckoutUrl.');
         }
 
+        var msg = RequestValidator.ValidateCreateCheckoutURL(createCheckoutUrlRequest);
+        if (!RequestValidator.isEmpty(msg)) {
+            throw new Error(msg);
+        }
+
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
@@ -158,7 +164,7 @@ export class HostedCheckoutsApi {
     }
     /**
      * 
-     * @summary Retrieve all tokens configured for the Hosted Checkout in your account in the [Bleumi Pay Dashboard](https://pay.bleumi.com/app/).
+     * @summary Retrieve all tokens configured for the Hosted Checkout in your account in the Bleumi Pay Dashboard.
      */
     public async listTokens (options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Array<CheckoutToken>;  }> {
         const localVarPath = this.basePath + '/v1/payment/hc/tokens';
@@ -241,6 +247,11 @@ export class HostedCheckoutsApi {
         // verify required parameter 'validateCheckoutRequest' is not null or undefined
         if (validateCheckoutRequest === null || validateCheckoutRequest === undefined) {
             throw new Error('Required parameter validateCheckoutRequest was null or undefined when calling validateCheckoutPayment.');
+        }
+
+        var msg = RequestValidator.ValidateCheckoutPaymentParams(validateCheckoutRequest);
+        if (!RequestValidator.isEmpty(msg)) {
+            throw new Error(msg);
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

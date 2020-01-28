@@ -3,7 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ethereum** | [**object&lt;string, WalletAddress&gt;**](WalletAddress.md) | A dictionary which gives the address of the wallet generated for each network  |  [optional]
+**ethereum** <br> (Optional)| [**object&lt;string, WalletAddress&gt;**](WalletAddress.md) | A dictionary which gives the address of the wallet generated for each Ethereum network  | 
+**algorand** <br> (Optional)| [**object&lt;string, WalletAddress&gt;**](WalletAddress.md) | A dictionary which gives the address of the wallet generated for each Algorand network  | 
 
 ## Example
 

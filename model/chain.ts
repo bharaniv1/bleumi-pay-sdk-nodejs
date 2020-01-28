@@ -1,6 +1,6 @@
 /**
- * Bleumi Pay API
- * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application
+ * Bleumi Pay REST API
+ * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai, Algorand payments and/or payouts into your business or application
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: info@bleumi.com
@@ -11,12 +11,14 @@
  */
 
 
+/**
+* Network enumeration. Please refer to the Supported Networks.
+*/
 export enum Chain {
     Mainnet = <any> 'mainnet',
-    Ropsten = <any> 'ropsten',
     Goerli = <any> 'goerli',
-    Kovan = <any> 'kovan',
-    Rinkeby = <any> 'rinkeby',
     Xdai = <any> 'xdai',
-    XdaiTestnet = <any> 'xdai_testnet'
+    XdaiTestnet = <any> 'xdai_testnet',
+    AlgMainnet = <any> 'alg_mainnet',
+    AlgTestnet = <any> 'alg_testnet'
 }
