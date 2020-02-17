@@ -72,7 +72,6 @@ async function createPayment(id: string) {
     }
 }
 
-
 ```
 
 More examples can be found under each method in [SDK Classes](README.md#sdk-classes) section.
@@ -132,6 +131,6 @@ PayoutsApi | [**listPayouts**](docs/PayoutsApi.md#listPayouts) | **GET** /v1/pay
 
 ## License
 
-Copyright 2019 Bleumi, Inc.
+Copyright 2020 Bleumi, Inc.
 
 Code licensed under the [MIT License](LICENSE).
