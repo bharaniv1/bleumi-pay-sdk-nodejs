@@ -96,6 +96,8 @@ PayoutsApi | [**listPayouts**](docs/PayoutsApi.md#listPayouts) | **GET** /v1/pay
 ## Documentation For Models
 
  - [AlgorandBalance](docs/AlgorandBalance.md)
+ - [AlgorandWalletAddress](docs/AlgorandWalletAddress.md)
+ - [AlgorandWalletInputs](docs/AlgorandWalletInputs.md)
  - [BadRequest](docs/BadRequest.md)
  - [Chain](docs/Chain.md)
  - [CheckoutToken](docs/CheckoutToken.md)
@@ -106,6 +108,8 @@ PayoutsApi | [**listPayouts**](docs/PayoutsApi.md#listPayouts) | **GET** /v1/pay
  - [CreatePayoutRequest](docs/CreatePayoutRequest.md)
  - [CreatePayoutResponse](docs/CreatePayoutResponse.md)
  - [EthereumBalance](docs/EthereumBalance.md)
+ - [EthereumWalletAddress](docs/EthereumWalletAddress.md)
+ - [EthereumWalletInputs](docs/EthereumWalletInputs.md) 
  - [PaginatedPaymentOperations](docs/PaginatedPaymentOperations.md)
  - [PaginatedPayments](docs/PaginatedPayments.md)
  - [PaginatedPayoutItems](docs/PaginatedPayoutItems.md)
@@ -122,7 +126,6 @@ PayoutsApi | [**listPayouts**](docs/PayoutsApi.md#listPayouts) | **GET** /v1/pay
  - [PayoutItemInputs](docs/PayoutItemInputs.md)
  - [ValidateCheckoutRequest](docs/ValidateCheckoutRequest.md)
  - [ValidateCheckoutResponse](docs/ValidateCheckoutResponse.md)
- - [WalletAddress](docs/WalletAddress.md)
  - [WalletBalance](docs/WalletBalance.md)
 
 ## Limitations

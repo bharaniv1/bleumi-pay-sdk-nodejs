@@ -1,6 +1,6 @@
 /**
  * Bleumi Pay API
- * A simple and powerful REST API to integrate ERC-20, Ethereum, xDai payments and/or payouts into your business or application
+ * A simple and powerful REST API to integrate Algorand, Ethereum, ERC-20 and xDai payments and/or payouts into your business
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: info@bleumi.com
@@ -10,12 +10,15 @@
  * Do not edit the class manually.
  */
 
+import { RequestFile } from '../api';
+import { AlgorandWalletInputs } from './algorandWalletInputs';
 
-export class WalletAddress {
+export class AlgorandWalletAddress {
     /**
     * Wallet address for the payment in the network
     */
     'addr': string;
+    'inputs'?: AlgorandWalletInputs;
 
     static discriminator: string | undefined = undefined;
 
@@ -24,10 +27,15 @@ export class WalletAddress {
             "name": "addr",
             "baseName": "addr",
             "type": "string"
+        },
+        {
+            "name": "inputs",
+            "baseName": "inputs",
+            "type": "AlgorandWalletInputs"
         }    ];
 
     static getAttributeTypeMap() {
-        return WalletAddress.attributeTypeMap;
+        return AlgorandWalletAddress.attributeTypeMap;
     }
 }
 

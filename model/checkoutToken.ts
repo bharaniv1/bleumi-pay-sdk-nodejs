@@ -15,7 +15,7 @@ export class CheckoutToken {
     /**
     * The network in which the token is defined
     */
-    'network'?: string;
+    'network': string;
     /**
     * The chain in which the token is defined
     */
@@ -23,7 +23,7 @@ export class CheckoutToken {
     /**
     * The address of the token
     */
-    'addr'?: string;
+    'addr': string;
     /**
     * Name of the token
     */
@@ -36,6 +36,10 @@ export class CheckoutToken {
     * Token decimal places
     */
     'decimals': number;
+    /**
+    * Currency code of the token
+    */
+    'currency': string;
 
     static discriminator: string | undefined = undefined;
 
@@ -69,6 +73,11 @@ export class CheckoutToken {
             "name": "decimals",
             "baseName": "decimals",
             "type": "number"
+        },
+        {
+            "name": "currency",
+            "baseName": "currency",
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {

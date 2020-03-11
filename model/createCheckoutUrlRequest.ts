@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { Chain } from './chain';
 
 export class CreateCheckoutUrlRequest {
     /**
@@ -37,7 +36,10 @@ export class CreateCheckoutUrlRequest {
     * Address of buyer. Refund operations on this payment will use this address. You can set this to your address to manually handle refunds (outside of Bleumi Pay) to your buyer. This address must be able to receive payments from smart contracts.
     */
     'buyerAddress'?: string;
-    'chain'?: Chain;
+    /**
+    * (Required if specifying \'token\') Network in which the hosted checkout is to be created. Please refer to the Supported Networks.
+    */
+    'chain'?: string;
     /**
     * ETH - for Ethereum ; XDAI - for xDai ; XDAIT - for xDai Testnet ; ALGO - Algo; <asset id> - for Algorand Standard Asset; <contract address of ERC-20 token> - for ERC-20 Tokens;
     */
@@ -83,7 +85,7 @@ export class CreateCheckoutUrlRequest {
         {
             "name": "chain",
             "baseName": "chain",
-            "type": "Chain"
+            "type": "string"
         },
         {
             "name": "token",

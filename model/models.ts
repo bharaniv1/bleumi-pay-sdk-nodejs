@@ -1,4 +1,6 @@
 export * from './algorandBalance';
+export * from './algorandWalletAddress';
+export * from './algorandWalletInputs';
 export * from './badRequest';
 export * from './chain';
 export * from './checkoutToken';
@@ -9,6 +11,8 @@ export * from './createPaymentResponse';
 export * from './createPayoutRequest';
 export * from './createPayoutResponse';
 export * from './ethereumBalance';
+export * from './ethereumWalletAddress';
+export * from './ethereumWalletInputs';
 export * from './paginatedPaymentOperations';
 export * from './paginatedPayments';
 export * from './paginatedPayoutItems';
@@ -25,12 +29,13 @@ export * from './payoutItem';
 export * from './payoutItemInputs';
 export * from './validateCheckoutRequest';
 export * from './validateCheckoutResponse';
-export * from './walletAddress';
 export * from './walletBalance';
 
 import localVarRequest = require('request');
 
 import { AlgorandBalance } from './algorandBalance';
+import { AlgorandWalletAddress } from './algorandWalletAddress';
+import { AlgorandWalletInputs } from './algorandWalletInputs';
 import { BadRequest } from './badRequest';
 import { Chain } from './chain';
 import { CheckoutToken } from './checkoutToken';
@@ -41,6 +46,8 @@ import { CreatePaymentResponse } from './createPaymentResponse';
 import { CreatePayoutRequest } from './createPayoutRequest';
 import { CreatePayoutResponse } from './createPayoutResponse';
 import { EthereumBalance } from './ethereumBalance';
+import { EthereumWalletAddress } from './ethereumWalletAddress';
+import { EthereumWalletInputs } from './ethereumWalletInputs';
 import { PaginatedPaymentOperations } from './paginatedPaymentOperations';
 import { PaginatedPayments } from './paginatedPayments';
 import { PaginatedPayoutItems } from './paginatedPayoutItems';
@@ -57,7 +64,6 @@ import { PayoutItem } from './payoutItem';
 import { PayoutItemInputs } from './payoutItemInputs';
 import { ValidateCheckoutRequest } from './validateCheckoutRequest';
 import { ValidateCheckoutResponse } from './validateCheckoutResponse';
-import { WalletAddress } from './walletAddress';
 import { WalletBalance } from './walletBalance';
 
 /* tslint:disable:no-unused-variable */
@@ -78,6 +84,8 @@ let enumsMap: {[index: string]: any} = {
 
 let typeMap: {[index: string]: any} = {
     "AlgorandBalance": AlgorandBalance,
+    "AlgorandWalletAddress": AlgorandWalletAddress,
+    "AlgorandWalletInputs": AlgorandWalletInputs,
     "BadRequest": BadRequest,
     "CheckoutToken": CheckoutToken,
     "CreateCheckoutUrlRequest": CreateCheckoutUrlRequest,
@@ -87,6 +95,8 @@ let typeMap: {[index: string]: any} = {
     "CreatePayoutRequest": CreatePayoutRequest,
     "CreatePayoutResponse": CreatePayoutResponse,
     "EthereumBalance": EthereumBalance,
+    "EthereumWalletAddress": EthereumWalletAddress,
+    "EthereumWalletInputs": EthereumWalletInputs,
     "PaginatedPaymentOperations": PaginatedPaymentOperations,
     "PaginatedPayments": PaginatedPayments,
     "PaginatedPayoutItems": PaginatedPayoutItems,
@@ -103,7 +113,6 @@ let typeMap: {[index: string]: any} = {
     "PayoutItemInputs": PayoutItemInputs,
     "ValidateCheckoutRequest": ValidateCheckoutRequest,
     "ValidateCheckoutResponse": ValidateCheckoutResponse,
-    "WalletAddress": WalletAddress,
     "WalletBalance": WalletBalance,
 }
 

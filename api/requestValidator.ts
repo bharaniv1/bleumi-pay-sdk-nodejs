@@ -24,22 +24,53 @@ export class RequestValidator {
         return (!str || 0 === str.length || (typeof str === 'undefined') );
     }
 
+    // IsEthAddress returns true if input is a valid Ethereum address.
+    public static IsEthAddress(addr: string) {
+        var regex = /^0x[a-fA-F0-9]{40}$/
+        if ((regex.test(addr)||(addr=="ETH")||(addr=="XDAI")||(addr=="XDAIT"))) {
+            return true;
+        }
+        return false;
+    }
+
+    // IsAlgoAddress returns true if input is a valid Algorand address.
+    public static IsAlgoAddress(addr: string) {
+        var regex = /^[A-Z2-7+=*]{58}$/
+        if (regex.test(addr)) {
+            return true;
+        }
+        return false;
+    }
+
+    // IsAlgoAddress returns true if input is a valid Algorand address.
+    public static IsAlgoToken(addr: string) {
+        var regex = /^[0-9]*$/
+        if (regex.test(addr)||(addr=="ALGO")) {
+            return true;
+        }
+        return false;
+    }    
+
     // CheckEthAddr is a Validator for Ethereum tokens.
     public static CheckEthAddr(name: string, input: string) {
-        var regex = /^0x[a-fA-F0-9]{40}$/
         var msg = "";
-        if (!(regex.test(input)||(input=="ETH")||(input=="XDAI")||(input=="XDAIT"))) {
-            msg = name + " is not a valid Ethereum address";
+        if (!this.IsEthAddress(input)) {
+            msg = "'" + name + "' is not a valid Ethereum address";
         }
         return msg;
     }
 
     // CheckAlgoAddr is a Validator for Algorand tokens.
-    public static CheckAlgoAddr(name: string, input: string) {
-        var regex = /^[A-Z2-7+=*]{58}$/
+    public static CheckAlgoAddr(name: string, input: string, isToken: boolean) {
         var msg = "";
-        if (!(regex.test(input)||(input=="ALGO"))) {
-            msg = name + " is not a valid Algorand address";
+        if (isToken) {
+            if (!this.IsAlgoToken(input) ) {
+                msg = "'" + name + "' is not a valid Algorand token";
+            }
+        } else {
+            if (!this.IsAlgoAddress(input) ) {
+                msg = "'" + name + "' is not a valid Algorand address";
+            }
         }
         return msg;
     }
@@ -59,7 +90,7 @@ export class RequestValidator {
     }
 
     // CheckNetworkAddr is a Validator for any network tokens.
-    public static CheckNetworkAddr(name: string, input: string, chain: string, mandatory: boolean) {
+    public static CheckNetworkAddr(name: string, input: string, chain: string, mandatory: boolean, isToken: boolean) {
         var msg = "";
         if (mandatory) {
             msg = this.CheckRequiredParam(name, input);
@@ -69,7 +100,7 @@ export class RequestValidator {
         }
         if (!this.isEmpty(input)) {
             if (this.IsAlgoNetwork(chain)) {
-                msg = this.CheckAlgoAddr(name, input)
+                msg = this.CheckAlgoAddr(name, input, isToken)
             } else {
                 msg = this.CheckEthAddr(name, input)
             }
@@ -96,18 +127,18 @@ export class RequestValidator {
             return msg;
         }
 
-        msg = this.CheckNetworkAddr("BuyerAddress", params.buyerAddress, networkChain , true);
+        msg = this.CheckNetworkAddr("BuyerAddress", params.buyerAddress, networkChain , true, false);
         if (!this.isEmpty(msg)) {
             return msg;
         }
 
-        msg = this.CheckNetworkAddr("TransferAddress", params.transferAddress, networkChain , true);
+        msg = this.CheckNetworkAddr("TransferAddress", params.transferAddress, networkChain , true, false);
         if (!this.isEmpty(msg)) {
             return msg;
         }
 
         if (!this.isEmpty(token)) {
-            msg = this.CheckNetworkAddr("Token", token, networkChain , false);
+            msg = this.CheckNetworkAddr("Algorand Standard Asset Token", token, networkChain , false, true);
         }
         return msg;
     }
@@ -119,7 +150,7 @@ export class RequestValidator {
         if (typeof chain !== 'undefined') {
             networkChain = String(chain);
         }
-        msg = this.CheckNetworkAddr("Token", params.token, networkChain , true);
+        msg = this.CheckNetworkAddr("Token", params.token, networkChain , true, true);
         return msg;
     }
 
@@ -138,7 +169,7 @@ export class RequestValidator {
                 return msg;
             }
        
-        msg = this.CheckNetworkAddr("Token", params.token, networkChain , true);
+        msg = this.CheckNetworkAddr("Token", params.token, networkChain , true, true);
         if (!this.isEmpty(msg)) {
             return msg;
         }
@@ -194,7 +225,7 @@ export class RequestValidator {
                 return msg;
             }
 
-            msg = this.CheckNetworkAddr("token", String(params.token), networkChain , false);
+            msg = this.CheckNetworkAddr("token", String(params.token), networkChain , false, true);
             if (!this.isEmpty(msg)) {
                 return msg;
             }
@@ -205,7 +236,7 @@ export class RequestValidator {
             }
             
             if (!this.isEmpty(buyerAddress)) {
-                msg = this.CheckNetworkAddr("buyerAddress", buyerAddress, networkChain , false);
+                msg = this.CheckNetworkAddr("buyerAddress", buyerAddress, networkChain , false, false);
                 if (!this.isEmpty(msg)) {
                     return msg;
                 }
@@ -240,18 +271,28 @@ export class RequestValidator {
         if (typeof chain !== 'undefined') {
             networkChain = String(chain);
         }
-        
+
+        //Check if 'txid' is provided
+        msg = this.CheckRequiredParam("TxId", params.txid);
+        if (!this.isEmpty(msg)) {
+            return msg;
+        }
+
         msg = this.CheckRequiredParam("Chain", networkChain);
         if (!this.isEmpty(msg)) {
             return msg;
         }
 
-        msg = this.CheckNetworkAddr("Token", params.token, networkChain , true);
+        //Check if 'Token' is valid network address.
+        msg = this.CheckNetworkAddr("Token", params.token, networkChain, true, true);
         if (!this.isEmpty(msg)) {
             return msg;
         }
 
+        //Check if 'Payouts' array is defined.
         var payouts = params.payouts;
+
+        //Check if 'Payouts' array contains at least 1 payout defined
         if (payouts.length == 0) {
             return "Payouts not defined."
         }
@@ -259,16 +300,19 @@ export class RequestValidator {
         var i, len;
         for (i = 0, len = payouts.length; i < len; ++i) {
             
-            msg = this.CheckNetworkAddr("TransferAddress", payouts[i].transferAddress, networkChain , true);
+            //Check if for given payout, 'TransferAddress' is provided 
+            msg = this.CheckNetworkAddr("TransferAddress", payouts[i].transferAddress, networkChain, true, false);
             if (!this.isEmpty(msg)) {
                 return msg;
             }
 
+            //Check if for given payout, 'Amount' is provided 
             msg = this.CheckRequiredParam("Amount", payouts[i].amount);
             if (!this.isEmpty(msg)) {
                 return msg;
             }
 
+            //For Algorand payouts, check if for given payout, 'Authorization' is provided 
             if (this.IsAlgoNetwork(networkChain)) {
                 var auth; 
                 if (typeof payouts[i].authorization !== 'undefined') {
