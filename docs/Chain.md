@@ -10,3 +10,5 @@ Network enumeration. Please refer to the [Supported Networks](https://pay.bleumi
 * `XdaiTestnet` (value: `"xdai_testnet"`)
 * `AlgMainnet` (value: `"alg_mainnet"`)
 * `AlgTestnet` (value: `"alg_testnet"`)
+* `Rsk` (value: `"rsk"`)
+* `RsKTestnet` (value: `"rsk_testnet"`)

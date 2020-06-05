@@ -4,7 +4,7 @@
 # **createCheckoutUrl**
 > CreateCheckoutUrlResponse createCheckoutUrl(body)
 
-This method generates a unique checkout URL to accept payment.
+This method generates an unique checkout URL to accept payment.
 
 ### Example
 ```javascript
@@ -26,10 +26,9 @@ async function createCheckoutUrl(id: string) {
         createCheckoutUrlRequest.amount = "<AMOUNT>"
         createCheckoutUrlRequest.cancelUrl = "<CANCEL_URL>" // Eg. https://demo.store/api/cancelOrder
         createCheckoutUrlRequest.successUrl = "<SUCCESS_URL>" // Eg. https://demo.store/api/completeOrder
-        createCheckoutUrlRequest.token = '<TOKEN>'; // string | Optional | Replace <TOKEN> with "ALGO" or "ETH" or "XDAI" or "XDAIT" or ERC-20 'Token Contract Address' or 'Algorand Standard Asset token'
+        createCheckoutUrlRequest.token = '<TOKEN>'; // string | Replace <TOKEN>  by anyone of the following values: 'ETH' or 'XDAI' or 'XDAIT' or ECR-20 Contract Address or 'RBTC' or RSK ECR-20 Contract Address or 'Asset ID' of Algorand Standard Asset. | Optional
 
         createCheckoutUrlRequest.chain = chain;
-        createCheckoutUrlRequest.buyerAddress = '<BUYER_ADDR>'; // string | Optional | Replace <BUYER_ADDR> with the Buyer's Network Address
 
         const response = await bleumiPay.createCheckoutUrl(createCheckoutUrlRequest);
         const createCheckoutUrlResponse = response.body;
@@ -70,16 +69,13 @@ The hmac.input GET parameter passed to successUrl contains payment parameters as
             <i>XDAI</i> - for xDai<br> 
             <i>XDAIT</i> - for xDai Testnet<br> 
             <i>ALGO</i> - for Algo <br> 
+            <i>RBTC</i> - for R-BTC <br> 
             <i>&lt;asset id&gt;</i> - for Algorand Standard Asset <br> 
-            <i>&lt;contract address of ERC-20 token&gt;</i> - for ERC-20; Please refer to <a href="https://pay.bleumi.com/docs/#erc-20" target="_blank">ERC-20 Tokens</a> for contract address; </li>
+            <i>&lt;contract address of ERC-20 token&gt;</i> - for ERC-20; Please refer to <a href="https://pay.bleumi.com/docs/#erc-20" target="_blank">ERC-20 Tokens</a> for contract address;<br> 
+            <i>&lt;contract address of RSK ERC-20 token&gt;</i> - for RSK ERC-20; Please refer to <a href="https://pay.bugnet.work/docs/#rsk-tokens-erc-20" target="_blank">RSK ERC-20 Tokens</a> for contract address;<br> 
+        </li>
         <li><b>Amount</b> - Token amount for the payment</li>
         <li><b>Number of block confirmations</b><br> 
-            <i>12</i> - for ETH<br> 
-            <i>0</i> - for XDAI<br> 
-            <i>0</i> - for XDAIT<br> 
-            <i>0</i> - for ALGO<br> 
-            <i>0</i> - for Algorand Standard Asset<br> 
-            <i>12</i> - for ERC-20<br>
         </li>
     </li>
 </ul>

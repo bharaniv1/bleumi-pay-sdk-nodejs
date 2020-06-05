@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { RequestFile } from '../api';
 
 export class WalletBalance {
     /**
@@ -28,6 +29,10 @@ export class WalletBalance {
     * Block in which the balance was last updated
     */
     'blockNum': string;
+    /**
+    * Safety level indicator
+    */
+    'safety': string;
 
     static discriminator: string | undefined = undefined;
 
@@ -50,6 +55,11 @@ export class WalletBalance {
         {
             "name": "blockNum",
             "baseName": "blockNum",
+            "type": "string"
+        },
+        {
+            "name": "safety",
+            "baseName": "safety",
             "type": "string"
         }    ];
 

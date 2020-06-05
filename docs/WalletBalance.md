@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **tokenBalance** | **string** | Token balance for the wallet in Ethereum format | 
 **tokenDecimals** | **number** | Token decimal places | 
 **blockNum** | **string** | Block in which the balance was last updated | 
+**safety** | **strings** | Safety level indicator | 
 
 ## Example
 

@@ -10,8 +10,10 @@
  * Do not edit the class manually.
  */
 
+import { RequestFile } from '../api';
 import { AlgorandBalance } from './algorandBalance';
 import { EthereumBalance } from './ethereumBalance';
+import { RskBalance } from './rskBalance';
 
 /**
 * Payment Balances
@@ -19,6 +21,7 @@ import { EthereumBalance } from './ethereumBalance';
 export class PaymentBalances {
     'ethereum'?: EthereumBalance;
     'algorand'?: AlgorandBalance;
+    'rsk'?: RskBalance;
 
     static discriminator: string | undefined = undefined;
 
@@ -32,6 +35,11 @@ export class PaymentBalances {
             "name": "algorand",
             "baseName": "algorand",
             "type": "AlgorandBalance"
+        },
+        {
+            "name": "rsk",
+            "baseName": "rsk",
+            "type": "RskBalance"
         }    ];
 
     static getAttributeTypeMap() {

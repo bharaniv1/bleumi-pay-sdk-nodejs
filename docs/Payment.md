@@ -32,6 +32,7 @@ Name | Type | Description | Notes
           "balance": "1",
           "token_decimals": 15,
           "blockNum": "1698324",
+          "safety": "high",
           "token_balance": "1000000000000000"
         }
       }

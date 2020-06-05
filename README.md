@@ -1,11 +1,11 @@
-<img src="https://pay.bleumi.com/wp-content/uploads/2019/04/logo_dark_bleumi_invoice_6797x1122.png" height="30">
+<img src="./assets/images/BleumiPay.png" height="30">
 
 
 # Bleumi Pay SDK for NodeJS
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/bleumi/bleumi-pay-sdk-nodejs/master/LICENSE)
 
-The Bleumi Pay SDK is a one-stop shop to help you integrate Algorand, Ethereum, ERC-20 and xDai payments and/or payouts into your business or application. The SDK bundles [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction) into one SDK to ease implementation and support.
+The Bleumi Pay SDK helps you integrate Algo, Algorand Standard Asset, Ethereum, ERC-20, RSK, RSK ERC-20 & xDai payments and payouts into your business or application. The SDK bundles [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction) into one SDK to ease implementation and support.
 
 **bleumi-pay-sdk-nodejs** is a TypeScrpit-NodeJS library that provides an interface between your NodeJS application and [Bleumi Pay API](https://pay.bleumi.com/docs/#introduction). This tutorial covers the basics, including examples, needed to use the SDK.
 
@@ -45,33 +45,42 @@ npm install @bleumi/pay-sdk -g
 
 ### Run Sample Code
 
-The following code generates a payment request to accept payment from the buyer:
+The following code generates an unique checkout URL to accept payment from the buyer:
 
 ```javascript
-import { PaymentsApi, PaymentsApiApiKeys, CreatePaymentRequest, Chain } from '@bleumi/pay-sdk';
+
+import { HostedCheckoutsApi, HostedCheckoutsApiApiKeys, CreateCheckoutUrlRequest } from '@bleumi/pay-sdk';
 
 // Instantiate client
-const bleumiPay = new PaymentsApi();
+const bleumiPay = new HostedCheckoutsApi();
 
-async function createPayment(id: string) {
+async function createCheckoutUrl(id: string) {
     try {
-        bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
+        bleumiPay.setApiKey(HostedCheckoutsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
 
-        const createPaymentRequest = new CreatePaymentRequest();
-        createPaymentRequest.id = id;
-        createPaymentRequest.buyerAddress = '<BUYER_ADDR>'; // Replace <BUYER_ADDR> with the Buyer's  Network Address
-        createPaymentRequest.transferAddress = '<MERCHANT_ADDR>'; // Replace <MERCHANT_ADDR> with the Merchant's Network Address
+        const chain = Chain.Goerli;
+        const createCheckoutUrlRequest = new CreateCheckoutUrlRequest();
 
-        const chain = NETWORK; // Replace NETWORK with the chain for payment creation Eg. Chain.Goerli
-        const response = await bleumiPay.createPayment(createPaymentRequest, chain);
-        const createPaymentResponse = response.body;
-        console.log(JSON.stringify(createPaymentResponse));
+        createCheckoutUrlRequest.id = id
+        createCheckoutUrlRequest.currency = "<CURRENCY>"
+        createCheckoutUrlRequest.amount = "<AMOUNT>"
+        createCheckoutUrlRequest.cancelUrl = "<CANCEL_URL>" // Eg. https://demo.store/api/cancelOrder
+        createCheckoutUrlRequest.successUrl = "<SUCCESS_URL>" // Eg. https://demo.store/api/completeOrder
+        createCheckoutUrlRequest.token = '<TOKEN>'; // string | Replace <TOKEN>  by anyone of the following values: 'ETH' or 'XDAI' or 'XDAIT' or ECR-20 Contract Address or 'RBTC' or RSK ECR-20 Contract Address or 'Asset ID' of Algorand Standard Asset. | Optional
+
+        createCheckoutUrlRequest.chain = chain;
+
+        const response = await bleumiPay.createCheckoutUrl(createCheckoutUrlRequest);
+        const createCheckoutUrlResponse = response.body;
+        console.log(JSON.stringify(createCheckoutUrlResponse));
     } catch (err) {
-        console.error('Error statusCode:', err.response.statusCode);
-        console.error('Error reponse:', err.response.body);
+        if (err.response) {
+            console.error('Error statusCode:', err.response.statusCode);
+            console.error('Error reponse:', err.response.body);
+        } 
+        console.log('Error message:',err.message);
     }
 }
-
 ```
 
 More examples can be found under each method in [SDK Classes](README.md#sdk-classes) section.
@@ -80,16 +89,15 @@ More examples can be found under each method in [SDK Classes](README.md#sdk-clas
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-PaymentsApi | [**createPayment**](docs/PaymentsApi.md#createPayment) | **POST** /v1/payment | Generate a unique wallet address in the specified network to accept payment
+HostedCheckoutsApi | [**createCheckoutUrl**](docs/HostedCheckoutsApi.md#createCheckoutUrl) | **POST** /v1/payment/hc | Generate a unique checkout URL to accept payment.
+HostedCheckoutsApi | [**listTokens**](docs/HostedCheckoutsApi.md#listTokens) | **GET** /v1/payment/hc/tokens | Retrieve all tokens configured for the Hosted Checkout in your account in the [Bleumi Pay Dashboard](https://pay.bleumi.com/app/).
+HostedCheckoutsApi | [**validateCheckoutPayment**](docs/HostedCheckoutsApi.md#validateCheckoutPayment) | **POST** /v1/payment/hc/validate | Validate the GET parameters passed by Hosted Checkout in successUrl upon successfully completing payment.
 PaymentsApi | [**getPayment**](docs/PaymentsApi.md#getPayment) | **GET** /v1/payment/{id} | Retrieve the wallet addresses &amp; token balances for a given payment
 PaymentsApi | [**listPayments**](docs/PaymentsApi.md#listPayments) | **GET** /v1/payment | Retrieve all payments created.
 PaymentsApi | [**settlePayment**](docs/PaymentsApi.md#settlePayment) | **POST** /v1/payment/{id}/settle | Settle a specific amount of a token for a given payment to the transferAddress and remaining balance (if any) will be refunded to the buyerAddress
 PaymentsApi | [**refundPayment**](docs/PaymentsApi.md#refundPayment) | **POST** /v1/payment/{id}/refund | Refund the balance of a token for a given payment to the buyerAddress
 PaymentsApi | [**getPaymentOperation**](docs/PaymentsApi.md#getPaymentOperation) | **GET** /v1/payment/{id}/operation/{txid} | Retrieve a payment operation for a specific payment.
 PaymentsApi | [**listPaymentOperations**](docs/PaymentsApi.md#listPaymentOperations) | **GET** /v1/payment/{id}/operation | Retrieve all payment operations for a specific payment.
-HostedCheckoutsApi | [**createCheckoutUrl**](docs/HostedCheckoutsApi.md#createCheckoutUrl) | **POST** /v1/payment/hc | Generate a unique checkout URL to accept payment.
-HostedCheckoutsApi | [**listTokens**](docs/HostedCheckoutsApi.md#listTokens) | **GET** /v1/payment/hc/tokens | Retrieve all tokens configured for the Hosted Checkout in your account in the [Bleumi Pay Dashboard](https://pay.bleumi.com/app/).
-HostedCheckoutsApi | [**validateCheckoutPayment**](docs/HostedCheckoutsApi.md#validateCheckoutPayment) | **POST** /v1/payment/hc/validate | Validate the GET parameters passed by Hosted Checkout in successUrl upon successfully completing payment.
 PayoutsApi | [**createPayout**](docs/PayoutsApi.md#createPayout) | **POST** /v1/payout | Create a payout.
 PayoutsApi | [**listPayouts**](docs/PayoutsApi.md#listPayouts) | **GET** /v1/payout | Returns a list of payouts
 
@@ -103,8 +111,6 @@ PayoutsApi | [**listPayouts**](docs/PayoutsApi.md#listPayouts) | **GET** /v1/pay
  - [CheckoutToken](docs/CheckoutToken.md)
  - [CreateCheckoutUrlRequest](docs/CreateCheckoutUrlRequest.md)
  - [CreateCheckoutUrlResponse](docs/CreateCheckoutUrlResponse.md)
- - [CreatePaymentRequest](docs/CreatePaymentRequest.md)
- - [CreatePaymentResponse](docs/CreatePaymentResponse.md)
  - [CreatePayoutRequest](docs/CreatePayoutRequest.md)
  - [CreatePayoutResponse](docs/CreatePayoutResponse.md)
  - [EthereumBalance](docs/EthereumBalance.md)
@@ -124,6 +130,7 @@ PayoutsApi | [**listPayouts**](docs/PayoutsApi.md#listPayouts) | **GET** /v1/pay
  - [Payout](docs/Payout.md)
  - [PayoutItem](docs/PayoutItem.md)
  - [PayoutItemInputs](docs/PayoutItemInputs.md)
+ - [RskBalance](docs/RskBalance.md) 
  - [ValidateCheckoutRequest](docs/ValidateCheckoutRequest.md)
  - [ValidateCheckoutResponse](docs/ValidateCheckoutResponse.md)
  - [WalletBalance](docs/WalletBalance.md)

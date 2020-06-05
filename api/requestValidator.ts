@@ -33,6 +33,15 @@ export class RequestValidator {
         return false;
     }
 
+    // IsRskAddress returns true if input is a valid RSK address.
+    public static IsRskAddress(addr: string) {
+        var regex = /^0x[a-fA-F0-9]{40}$/
+        if ((regex.test(addr)||(addr=="RBTC"))) {
+            return true;
+        }
+        return false;
+    }
+
     // IsAlgoAddress returns true if input is a valid Algorand address.
     public static IsAlgoAddress(addr: string) {
         var regex = /^[A-Z2-7+=*]{58}$/
@@ -51,11 +60,20 @@ export class RequestValidator {
         return false;
     }    
 
-    // CheckEthAddr is a Validator for Ethereum tokens.
+    // CheckEthAddr is a Validator for Ethereum address.
     public static CheckEthAddr(name: string, input: string) {
         var msg = "";
         if (!this.IsEthAddress(input)) {
             msg = "'" + name + "' is not a valid Ethereum address";
+        }
+        return msg;
+    }
+
+    // CheckRskAddr is a Validator for RSK address.
+    public static CheckRskAddr(name: string, input: string) {
+        var msg = "";
+        if (!this.IsEthAddress(input)) {
+            msg = "'" + name + "' is not a valid RSK address";
         }
         return msg;
     }
@@ -80,6 +98,11 @@ export class RequestValidator {
         return ((value == "alg_mainnet") || (value == "alg_testnet"))
     }
 
+    // IsRskNetwork returns true if the chain is RSK
+    public static IsRskNetwork(value: string) {
+        return ((value == "rsk") || (value == "rsk_testnet"))
+    }
+
     // CheckRequiredParam is a Validator for verify whether a required parameter is missing
     public static CheckRequiredParam(name: string, input: string) {
         var msg = "";
@@ -101,6 +124,8 @@ export class RequestValidator {
         if (!this.isEmpty(input)) {
             if (this.IsAlgoNetwork(chain)) {
                 msg = this.CheckAlgoAddr(name, input, isToken)
+            } else if (this.IsRskNetwork(chain)) {
+                msg = this.CheckRskAddr(name, input)
             } else {
                 msg = this.CheckEthAddr(name, input)
             }
@@ -138,7 +163,7 @@ export class RequestValidator {
         }
 
         if (!this.isEmpty(token)) {
-            msg = this.CheckNetworkAddr("Algorand Standard Asset Token", token, networkChain , false, true);
+            msg = this.CheckNetworkAddr("Token", token, networkChain , false, true);
         }
         return msg;
     }

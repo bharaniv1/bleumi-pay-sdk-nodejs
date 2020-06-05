@@ -1,6 +1,6 @@
 # PayoutsApi
 
-Payouts are available only for the Ethereum and xDAI networks today and require you to set up a Private Payment Processor and link it to your account. Please contact support@bleumi.com if you want to enable payouts for your account.
+Payouts are available only for the Ethereum, xDAI and RSK networks today and require you to set up a Private Payment Processor and link it to your account. Please contact support@bleumi.com if you want to enable payouts for your account.
 
 <a name="createPayout"></a>
 # **createPayout**
@@ -24,7 +24,7 @@ async function createPayoutRequest(id: string) {
 
 		const createPayoutRequest = new CreatePayoutRequest();
         payoutRcreatePayoutRequesteq.txid = id; // string | Replace with unique payout ID 
-        createPayoutRequest.token = "<TOKEN>"; // string | Optional | Replace <TOKEN> with "ALGO" or "ETH" or "XDAI" or "XDAIT" or ERC-20 'Token Contract Address' or 'Algorand Standard Asset token'
+        createPayoutRequest.token = "<TOKEN>"; // string | Replace <TOKEN>  by anyone of the following values: 'ETH' or 'XDAI' or 'XDAIT' or ECR-20 Contract Address or 'RBTC' or RSK ECR-20 Contract Address or 'Asset ID' of Algorand Standard Asset. |
 		
 		createPayoutRequest.payouts = [
             {

@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { RequestFile } from '../api';
 
 /**
 * Network enumeration. Please refer to the Supported Networks.
@@ -20,5 +21,7 @@ export enum Chain {
     Xdai = <any> 'xdai',
     XdaiTestnet = <any> 'xdai_testnet',
     AlgMainnet = <any> 'alg_mainnet',
-    AlgTestnet = <any> 'alg_testnet'
+    AlgTestnet = <any> 'alg_testnet',
+    Rsk = <any> 'rsk',
+    RskTestnet = <any> 'rsk_testnet'
 }

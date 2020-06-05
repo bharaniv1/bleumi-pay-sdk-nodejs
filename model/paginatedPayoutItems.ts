@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { RequestFile } from '../api';
 import { PayoutItem } from './payoutItem';
 
 export class PaginatedPayoutItems {

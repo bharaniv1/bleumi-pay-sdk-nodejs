@@ -27,6 +27,7 @@ export * from './paymentSettleRequest';
 export * from './payout';
 export * from './payoutItem';
 export * from './payoutItemInputs';
+export * from './rskBalance';
 export * from './validateCheckoutRequest';
 export * from './validateCheckoutResponse';
 export * from './walletBalance';
@@ -62,6 +63,7 @@ import { PaymentSettleRequest } from './paymentSettleRequest';
 import { Payout } from './payout';
 import { PayoutItem } from './payoutItem';
 import { PayoutItemInputs } from './payoutItemInputs';
+import { RskBalance } from './rskBalance';
 import { ValidateCheckoutRequest } from './validateCheckoutRequest';
 import { ValidateCheckoutResponse } from './validateCheckoutResponse';
 import { WalletBalance } from './walletBalance';
@@ -111,6 +113,7 @@ let typeMap: {[index: string]: any} = {
     "Payout": Payout,
     "PayoutItem": PayoutItem,
     "PayoutItemInputs": PayoutItemInputs,
+    "RskBalance": RskBalance,
     "ValidateCheckoutRequest": ValidateCheckoutRequest,
     "ValidateCheckoutResponse": ValidateCheckoutResponse,
     "WalletBalance": WalletBalance,
@@ -220,7 +223,7 @@ export class ObjectSerializer {
             let attributeTypes = typeMap[type].getAttributeTypeMap();
             for (let index in attributeTypes) {
                 let attributeType = attributeTypes[index];
-                instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
+                instance[attributeType.baseName] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
             }
             return instance;
         }

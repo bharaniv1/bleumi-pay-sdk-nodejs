@@ -1,73 +1,5 @@
 # PaymentsApi
 
-<a name="createPayment"></a>
-# **createPayment**
-> CreatePaymentResponse createPayment(body, chain)
-
-This method generates a unique wallet address in the specified network to accept payment.
-
-### Example
-```javascript
-
-import { PaymentsApi, PaymentsApiApiKeys, CreatePaymentRequest, Chain } from '@bleumi/pay-sdk';
-
-// Instantiate client
-const bleumiPay = new PaymentsApi();
-
-async function createPayment(id: string) {
-    try {
-        bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
-        const buyer = '<BUYER_ADDR>'; // Replace <BUYER_ADDR> with the Buyer's Enthereum Network Address
-        const merchant = '<MERCHANT_ADDR>'; // Replace <MERCHANT_ADDR> with the Merchant's Enthereum Network Address
-
-        const createPaymentRequest = new CreatePaymentRequest();
-        createPaymentRequest.id = id;
-        createPaymentRequest.buyerAddress = buyer;
-        createPaymentRequest.transferAddress = merchant;
-
-        const chain = Chain.Goerli;
-        const response = await bleumiPay.createPayment(createPaymentRequest, chain);
-        const createPaymentResponse = response.body;
-        console.log(JSON.stringify(createPaymentResponse));
-    } catch (err) {
-        if (err.response) {
-            console.error('Error statusCode:', err.response.statusCode);
-            console.error('Error reponse:', err.response.body);
-        } 
-        console.log('Error message:',err.message);
-    }
-}
-
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**CreatePaymentRequest**](CreatePaymentRequest.md)| Specify payment creation parameters. |
- **chain** | [**Chain**](Chain.md)| Ethereum network in which payment is to be created. Please refer documentation for [Supported Networks](https://pay.bleumi.com/docs/#supported-networks) |
-
-### Return type
-
-[**CreatePaymentResponse**](CreatePaymentResponse.md)
-
-Field | Type | Description
------ | ----- | -----
-addr | string | Wallet address
-inputs | dictionary | A dictionary containing the network specific details used to create the wallet
-
-**Note:** Bleumi recommends each merchant to keep a copy of the `inputs` map to ensure access to wallet funds at all times.
-
-### 400 Errors
-
-The following table is a list of possible error codes that can be returned, along with additional information about how to resolve them for a response with 400 status code.
-
-errorCode <br> <i>errorMessage</i> | Description
----- | ---- 
-ValidationError <br> <i>&lt;details&gt;</i> | Details on input which does not conform to the above schema
-ValidationError <br> <i>wallet_already_exists&#124;&lt;addr&gt;</i> | A wallet with address &lt;addr&gt; has already been created with the specified payment 'id' for the given network
-
-
 <a name="getPayment"></a>
 # **getPayment**
 > Payment getPayment(id)
@@ -207,7 +139,7 @@ async function settleWallet(id: string) {
 
         const paymentSettleRequest = new PaymentSettleRequest();
         paymentSettleRequest.amount = '<AMT>'; // string | Replace <AMT> with settle amount
-        paymentSettleRequest.token = '<TOKEN>'; // string | Replace <TOKEN> with "ALGO" or "ETH" or "XDAI" or "XDAIT" or ERC-20 Token Contract Address or Algorand Standard Asset token
+        paymentSettleRequest.token = '<TOKEN>'; // string | Replace <TOKEN>  by anyone of the following values: 'ETH' or 'XDAI' or 'XDAIT' or ECR-20 Contract Address or 'RBTC' or RSK ECR-20 Contract Address or 'Asset ID' of Algorand Standard Asset. |
 
         const chain = Chain.Goerli;
         const response = await bleumiPay.settlePayment(id, paymentSettleRequest, chain);
@@ -268,7 +200,7 @@ async function refundWallet(id: string) {
         bleumiPay.setApiKey(PaymentsApiApiKeys.ApiKeyAuth, '<YOUR_API_KEY>'); //Replace <YOUR_API_KEY> with your actual API key
 
         const paymentRefundRequest = new PaymentRefundRequest();
-        paymentRefundRequest.token = '<TOKEN>'; // string | Replace <TOKEN> with "ALGO" or "ETH" or "XDAI" or "XDAIT" or ERC-20 Token Contract Address or Algorand Standard Asset token
+        paymentRefundRequest.token = '<TOKEN>'; // string | Replace <TOKEN>  by anyone of the following values: 'ETH' or 'XDAI' or 'XDAIT' or ECR-20 Contract Address or 'RBTC' or RSK ECR-20 Contract Address or 'Asset ID' of Algorand Standard Asset. |
 
         const chain = Chain.Goerli;
         const response = await bleumiPay.refundWallet(id, paymentRefundRequest, chain);
