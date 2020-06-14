@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **results** | [**Array&lt;PaymentOperation&gt;**](PaymentOperation.md) | List of operations of the payment in the current page | 
-**nextToken** | **string** | Cursor to fetch next page of results, empty if no more results |  [optional]
+**nextToken** <br>(Optional)| **string** | Cursor to fetch next page of results, empty if no more results |
 
 
 

@@ -16,8 +16,6 @@ import http = require('http');
 /* tslint:disable:no-unused-locals */
 import { BadRequest } from '../model/badRequest';
 import { Chain } from '../model/chain';
-import { CreatePaymentRequest } from '../model/createPaymentRequest';
-import { CreatePaymentResponse } from '../model/createPaymentResponse';
 import { PaginatedPaymentOperations } from '../model/paginatedPaymentOperations';
 import { PaginatedPayments } from '../model/paginatedPayments';
 import { Payment } from '../model/payment';
@@ -99,88 +97,6 @@ export class PaymentsApi {
         this.interceptors.push(interceptor);
     }
 
-    /**
-     * 
-     * @summary Generate a unique wallet address in the specified network to accept payment
-     * @param createPaymentRequest 
-     * @param chain Network in which payment is to be created. Please refer documentation for Supported Networks
-     */
-    public async createPayment (createPaymentRequest: CreatePaymentRequest, chain?: Chain, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: CreatePaymentResponse;  }> {
-        const localVarPath = this.basePath + '/v1/payment';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'createPaymentRequest' is not null or undefined
-        if (createPaymentRequest === null || createPaymentRequest === undefined) {
-            throw new Error('Required parameter createPaymentRequest was null or undefined when calling createPayment.');
-        }
-
-        if (chain !== undefined) {
-            localVarQueryParameters['chain'] = ObjectSerializer.serialize(chain, "Chain");
-        }
-
-        var msg = RequestValidator.ValidateCreatePayment(createPaymentRequest, chain);
-        if (!RequestValidator.isEmpty(msg)) {
-            throw new Error(msg);
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(createPaymentRequest, "CreatePaymentRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.ApiKeyAuth.apiKey) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.ApiKeyAuth.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: CreatePaymentResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        body = ObjectSerializer.deserialize(body, "CreatePaymentResponse");
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
-    }
     /**
      * 
      * @summary Retrieve the wallet addresses & token balances for a given payment

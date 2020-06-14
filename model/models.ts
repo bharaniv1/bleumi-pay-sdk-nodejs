@@ -1,3 +1,4 @@
+export * from './algorandAddress';
 export * from './algorandBalance';
 export * from './algorandWalletAddress';
 export * from './algorandWalletInputs';
@@ -6,10 +7,9 @@ export * from './chain';
 export * from './checkoutToken';
 export * from './createCheckoutUrlRequest';
 export * from './createCheckoutUrlResponse';
-export * from './createPaymentRequest';
-export * from './createPaymentResponse';
 export * from './createPayoutRequest';
 export * from './createPayoutResponse';
+export * from './ethereumAddress';
 export * from './ethereumBalance';
 export * from './ethereumWalletAddress';
 export * from './ethereumWalletInputs';
@@ -27,6 +27,7 @@ export * from './paymentSettleRequest';
 export * from './payout';
 export * from './payoutItem';
 export * from './payoutItemInputs';
+export * from './rskAddress';
 export * from './rskBalance';
 export * from './validateCheckoutRequest';
 export * from './validateCheckoutResponse';
@@ -34,6 +35,7 @@ export * from './walletBalance';
 
 import localVarRequest = require('request');
 
+import { AlgorandAddress } from './algorandAddress';
 import { AlgorandBalance } from './algorandBalance';
 import { AlgorandWalletAddress } from './algorandWalletAddress';
 import { AlgorandWalletInputs } from './algorandWalletInputs';
@@ -42,10 +44,9 @@ import { Chain } from './chain';
 import { CheckoutToken } from './checkoutToken';
 import { CreateCheckoutUrlRequest } from './createCheckoutUrlRequest';
 import { CreateCheckoutUrlResponse } from './createCheckoutUrlResponse';
-import { CreatePaymentRequest } from './createPaymentRequest';
-import { CreatePaymentResponse } from './createPaymentResponse';
 import { CreatePayoutRequest } from './createPayoutRequest';
 import { CreatePayoutResponse } from './createPayoutResponse';
+import { EthereumAddress } from './ethereumAddress';
 import { EthereumBalance } from './ethereumBalance';
 import { EthereumWalletAddress } from './ethereumWalletAddress';
 import { EthereumWalletInputs } from './ethereumWalletInputs';
@@ -63,6 +64,7 @@ import { PaymentSettleRequest } from './paymentSettleRequest';
 import { Payout } from './payout';
 import { PayoutItem } from './payoutItem';
 import { PayoutItemInputs } from './payoutItemInputs';
+import { RskAddress } from './rskAddress';
 import { RskBalance } from './rskBalance';
 import { ValidateCheckoutRequest } from './validateCheckoutRequest';
 import { ValidateCheckoutResponse } from './validateCheckoutResponse';
@@ -85,6 +87,7 @@ let enumsMap: {[index: string]: any} = {
 }
 
 let typeMap: {[index: string]: any} = {
+    "AlgorandAddress": AlgorandAddress,
     "AlgorandBalance": AlgorandBalance,
     "AlgorandWalletAddress": AlgorandWalletAddress,
     "AlgorandWalletInputs": AlgorandWalletInputs,
@@ -92,10 +95,9 @@ let typeMap: {[index: string]: any} = {
     "CheckoutToken": CheckoutToken,
     "CreateCheckoutUrlRequest": CreateCheckoutUrlRequest,
     "CreateCheckoutUrlResponse": CreateCheckoutUrlResponse,
-    "CreatePaymentRequest": CreatePaymentRequest,
-    "CreatePaymentResponse": CreatePaymentResponse,
     "CreatePayoutRequest": CreatePayoutRequest,
     "CreatePayoutResponse": CreatePayoutResponse,
+    "EthereumAddress": EthereumAddress,
     "EthereumBalance": EthereumBalance,
     "EthereumWalletAddress": EthereumWalletAddress,
     "EthereumWalletInputs": EthereumWalletInputs,
@@ -113,6 +115,7 @@ let typeMap: {[index: string]: any} = {
     "Payout": Payout,
     "PayoutItem": PayoutItem,
     "PayoutItemInputs": PayoutItemInputs,
+    "RskAddress": RskAddress,
     "RskBalance": RskBalance,
     "ValidateCheckoutRequest": ValidateCheckoutRequest,
     "ValidateCheckoutResponse": ValidateCheckoutResponse,

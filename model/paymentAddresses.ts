@@ -11,16 +11,17 @@
  */
 
 import { RequestFile } from '../api';
-import { AlgorandWalletAddress } from './algorandWalletAddress';
-import { EthereumWalletAddress } from './ethereumWalletAddress';
+import { AlgorandAddress } from './algorandAddress';
+import { EthereumAddress } from './ethereumAddress';
+import { RskAddress } from './rskAddress';
 
 /**
 * Payment addresses
 */
 export class PaymentAddresses {
-    'ethereum'?: { [key: string]: EthereumWalletAddress; };
-    'algorand'?: { [key: string]: AlgorandWalletAddress; };
-    'rsk'?: { [key: string]: EthereumWalletAddress; };
+    'ethereum'?: EthereumAddress;
+    'algorand'?: AlgorandAddress;
+    'rsk'?: RskAddress;
 
     static discriminator: string | undefined = undefined;
 
@@ -28,17 +29,17 @@ export class PaymentAddresses {
         {
             "name": "ethereum",
             "baseName": "ethereum",
-            "type": "{ [key: string]: EthereumWalletAddress; }"
+            "type": "EthereumAddress"
         },
         {
             "name": "algorand",
             "baseName": "algorand",
-            "type": "{ [key: string]: AlgorandWalletAddress; }"
+            "type": "AlgorandAddress"
         },
         {
             "name": "rsk",
             "baseName": "rsk",
-            "type": "{ [key: string]: EthereumWalletAddress; }"
+            "type": "RskAddress"
         }    ];
 
     static getAttributeTypeMap() {

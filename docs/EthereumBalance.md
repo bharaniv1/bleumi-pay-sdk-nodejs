@@ -1,12 +1,13 @@
 # bleumi.pay.Model.EthereumBalance
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Mainnet** (optional) | [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the token balances in Ethereum MainNet |
-**Goerli** (optional) | [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the token balances in Ethereum Goerli TestNet |
-**Xdai** (optional) | [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the token balances in xDAI | 
-**XdaiTestnet** (optional) | [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the token balances in xDAI TestNet |
+**Mainnet** <br>(Optional) | [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the token balances in Ethereum MainNet |
+**Goerli** <br>(Optional) | [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the token balances in Ethereum Goerli TestNet |
+**Xdai** <br>(Optional) | [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the token balances in xDAI | 
+**XdaiTestnet** <br>(Optional) | [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the token balances in xDAI TestNet |
 
 
 ## Example - Goerli - TestNet

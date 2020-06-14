@@ -34,9 +34,9 @@ export class CreateCheckoutUrlRequest {
     */
     'successUrl': string;
     /**
-    * Address of buyer. Refund operations on this payment will use this address. You can set this to your address to manually handle refunds (outside of Bleumi Pay) to your buyer. This address must be able to receive payments from smart contracts.
+    * Payment transfer address (only used in case of Marketplace payments). Use this field to override the token\'s settlement address specified in the Bleumi Pay Dashboard for the payment.
     */
-    'buyerAddress'?: string;
+    'transferAddress'?: string;
     /**
     * (Required if specifying \'token\') Network in which the hosted checkout is to be created. Please refer to the Supported Networks.
     */
@@ -79,8 +79,8 @@ export class CreateCheckoutUrlRequest {
             "type": "string"
         },
         {
-            "name": "buyerAddress",
-            "baseName": "buyerAddress",
+            "name": "transferAddress",
+            "baseName": "transferAddress",
             "type": "string"
         },
         {

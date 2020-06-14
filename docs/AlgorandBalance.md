@@ -3,8 +3,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AlgMainnet** (optional)| [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the Wallet balances in each Algorand MainNet |   
-**AlgTestnet** (optional)| [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the Wallet balances in each Algorand TestNet | 
+**AlgMainnet** <br>(Optional)| [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the Wallet balances in each Algorand MainNet |
+**AlgTestnet** <br>(Optional)| [**object&lt;string, WalletBalance&gt;**](WalletBalance.md) | A dictionary which gives the Wallet balances in each Algorand TestNet |
 
 
 ## Example - Algorand TestNet

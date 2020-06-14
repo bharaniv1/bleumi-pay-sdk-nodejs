@@ -6,9 +6,9 @@ Name | Type | Description | Notes
 **txid** | **string** | Transaction ID of the operation |  [optional]
 **chain** | **string** | Network in which the operation was carried out  | 
 **funcName** | **string** |   Name of the function invoked on the Payment Processor.<br/><br/>Functions available:<br/> - createAndSettleWallet<br/> - createAndRefundWallet
-**status** | **boolean** | <b>null</b> - operation in progress <br/> <b>true</b> - operation completed successfuly <br/> <b>false</b> - operation failed to process | 
+**status** <br>(Optional)| **boolean** | <b>null</b> - operation in progress <br/> <b>true</b> - operation completed successfuly <br/> <b>false</b> - operation failed to process | 
 **inputs** | [**PaymentOperationInputs**](PaymentOperationInputs.md) | The inputs provided during this operation creation | 
-**hash** | **string** | Transaction hash of operation submitted to the network. This field is blank when operation is in progress. | 
+**hash** <br>(Optional)| **string** | Transaction hash of operation submitted to the network. This field is blank when operation is in progress. | 
 
 ## Settle Opeation Example
 

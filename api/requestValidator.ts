@@ -11,7 +11,6 @@
  */
 
 import { Chain } from '../model/chain';
-import { CreatePaymentRequest } from '../model/createPaymentRequest';
 import { PaymentRefundRequest } from '../model/paymentRefundRequest';
 import { PaymentSettleRequest } from '../model/paymentSettleRequest';
 import { CreateCheckoutUrlRequest } from '../model/createCheckoutUrlRequest';
@@ -133,41 +132,6 @@ export class RequestValidator {
         return msg;
     }
 
-    // ValidateCreatePayment - checks if createPayment parameters are valid
-    public static ValidateCreatePayment(params: CreatePaymentRequest, chain?: Chain) {
-        var msg = "";
-        var token;
-        var networkChain;
-
-        if (typeof params.token !== 'undefined') {
-            token = String(params.token);
-        }
-
-        if (typeof chain !== 'undefined') {
-            networkChain = String(chain);
-        }
-        
-        msg = this.CheckRequiredParam("Chain", networkChain);
-        if (!this.isEmpty(msg)) {
-            return msg;
-        }
-
-        msg = this.CheckNetworkAddr("BuyerAddress", params.buyerAddress, networkChain , true, false);
-        if (!this.isEmpty(msg)) {
-            return msg;
-        }
-
-        msg = this.CheckNetworkAddr("TransferAddress", params.transferAddress, networkChain , true, false);
-        if (!this.isEmpty(msg)) {
-            return msg;
-        }
-
-        if (!this.isEmpty(token)) {
-            msg = this.CheckNetworkAddr("Token", token, networkChain , false, true);
-        }
-        return msg;
-    }
-
     // ValidateRefundPayment - checks if refundPayment parameters are valid
     public static ValidateRefundPayment(params: PaymentRefundRequest, chain?: Chain) {
         var msg = "";
@@ -255,13 +219,13 @@ export class RequestValidator {
                 return msg;
             }
 
-            var buyerAddress;
-            if (typeof params.buyerAddress !== 'undefined') {
-                buyerAddress = String(params.buyerAddress);
+            var transferAddress;
+            if (typeof params.transferAddress !== 'undefined') {
+                transferAddress = String(params.transferAddress);
             }
             
-            if (!this.isEmpty(buyerAddress)) {
-                msg = this.CheckNetworkAddr("buyerAddress", buyerAddress, networkChain , false, false);
+            if (!this.isEmpty(transferAddress)) {
+                msg = this.CheckNetworkAddr("transferAddress", transferAddress, networkChain , false, false);
                 if (!this.isEmpty(msg)) {
                     return msg;
                 }
